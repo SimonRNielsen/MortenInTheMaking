@@ -39,10 +39,10 @@ namespace MortenInTheMaking
         #endregion
         #region Assets
 
-        public static Dictionary<Texture2D, string> sprites = new Dictionary<Texture2D, string>();
-        public static Dictionary<Texture2D[], string> animations = new Dictionary<Texture2D[], string>();
-        public static Dictionary<SoundEffect, string> soundEffects = new Dictionary<SoundEffect, string>();
-        public static Dictionary<Song, string> music = new Dictionary<Song, string>();
+        public static Dictionary<string, Texture2D> sprites = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Texture2D[]> animations = new Dictionary<string, Texture2D[]>();
+        public static Dictionary<string, SoundEffect> soundEffects = new Dictionary<string, SoundEffect>();
+        public static Dictionary<string, Song> music = new Dictionary<string, Song>();
         public static SpriteFont gameFont;
 
         #endregion
@@ -132,22 +132,22 @@ namespace MortenInTheMaking
 
         #region LoadAssets
 
-        private void LoadSprites(ContentManager content, Dictionary<Texture2D, string> sprites)
+        private void LoadSprites(ContentManager content, Dictionary<string, Texture2D> sprites)
         {
 
         }
 
-        private void LoadAnimations(ContentManager content, Dictionary<Texture2D[], string> animations)
+        private void LoadAnimations(ContentManager content, Dictionary<string, Texture2D[]> animations)
         {
 
         }
 
-        private void LoadSounds(ContentManager content, Dictionary<SoundEffect, string> sounds)
+        private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)
         {
 
         }
 
-        private void LoadMusic(ContentManager content, Dictionary<Song, string> songs)
+        private void LoadMusic(ContentManager content, Dictionary<string, Song> songs)
         {
 
         }
