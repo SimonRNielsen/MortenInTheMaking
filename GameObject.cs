@@ -21,14 +21,24 @@ namespace MortenInTheMaking
         protected float layer = 0.5f;
         protected float scale = 1;
         protected Color color = Color.White;
-        protected SpriteEffects[] spriteEffects = new SpriteEffects[3] {SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically};
+        protected SpriteEffects[] spriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected int spriteEffectIndex;
         private float rotation;
         private bool isAlive = true;
 
         #endregion
         #region Properties
+        public Rectangle CollisionBox
+        {
 
+            get
+            {
+                if (sprite != null)
+                    return new Rectangle((int)(Position.X - (sprite.Width / 2) * scale), (int)(Position.Y - (sprite.Height / 2) * scale), (int)(sprite.Width * scale), (int)(sprite.Height * scale));
+                else
+                    return new Rectangle();
+            }
+        }
         public Texture2D Sprite { get => sprite; set => sprite = value; }
         public float Rotation { get => rotation; set => rotation = value; }
         public Vector2 Position { get => position; set => position = value; }
