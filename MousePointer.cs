@@ -17,8 +17,8 @@ namespace MortenInTheMaking
 
         #region Fields
 
-        Texture2D sprite;
-        GameObject tempObject;
+        private Texture2D sprite;
+        private GameObject tempObject;
 
         #endregion
         #region Properties
