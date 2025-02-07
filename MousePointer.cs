@@ -39,7 +39,15 @@ namespace MortenInTheMaking
         #endregion
         #region Methods
 
-
+        /// <summary>
+        /// Draws a custom mousecursor at the location its detected to be in
+        /// </summary>
+        /// <param name="spriteBatch">Gameworld logic</param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (tempObject == null)
+                spriteBatch.Draw(sprite, GameWorld.MousePosition, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
+        }
 
         #endregion
 
