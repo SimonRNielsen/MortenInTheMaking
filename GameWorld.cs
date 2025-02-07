@@ -161,6 +161,7 @@ namespace MortenInTheMaking
 
                 _spriteBatch.Begin();
 
+                mousePointer.Draw(_spriteBatch);
                 if (gameObjects.Count > 0)
                     foreach (GameObject gameObject in gameObjects)
                     {
