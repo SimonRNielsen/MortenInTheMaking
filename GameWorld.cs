@@ -23,6 +23,8 @@ namespace MortenInTheMaking
         private static bool leftMouseClick;
         private static bool rightMouseClick;
         internal static MousePointer mousePointer;
+        private volatile GameTime gameTime;
+        private bool gameRunning = true;
 
         #region Lists
 
@@ -32,7 +34,7 @@ namespace MortenInTheMaking
         #endregion
         #region Threads
 
-
+        private Thread drawThread;
 
         #endregion
         #region Assets
@@ -61,7 +63,8 @@ namespace MortenInTheMaking
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            
+            drawThread = new Thread(RunDraw);
+            drawThread.IsBackground = true;
         }
 
         #endregion
@@ -82,6 +85,7 @@ namespace MortenInTheMaking
             LoadMusic(Content, music);
             gameFont = Content.Load<SpriteFont>("standardFont");
             mousePointer = new MousePointer();
+            drawThread.Start();
 
         }
 
@@ -95,7 +99,13 @@ namespace MortenInTheMaking
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                gameRunning = false;
+                Thread.Sleep(30);
                 Exit();
+            }
+
+            this.gameTime = gameTime;
 
             // TODO: Add your update logic here
 
@@ -117,11 +127,6 @@ namespace MortenInTheMaking
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
         }
 
         #region LoadAssets
@@ -145,6 +150,31 @@ namespace MortenInTheMaking
         {
 
         }
+
+        private void RunDraw()
+        {
+
+            while (gameRunning)
+            {
+
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+
+                _spriteBatch.Begin();
+
+                if (gameObjects.Count > 0)
+                    foreach (GameObject gameObject in gameObjects)
+                    {
+                        gameObject.Draw(_spriteBatch);
+                    }
+
+                base.Draw(gameTime);
+
+                _spriteBatch.End();
+
+            }
+
+        }
+
 
         #endregion
         #endregion
