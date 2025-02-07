@@ -151,12 +151,15 @@ namespace MortenInTheMaking
 
         }
 
+        #endregion
+
+
         private void RunDraw()
         {
 
             while (gameRunning)
             {
-
+                
                 GraphicsDevice.Clear(Color.CornflowerBlue);
 
                 _spriteBatch.Begin();
@@ -176,8 +179,6 @@ namespace MortenInTheMaking
 
         }
 
-
-        #endregion
         #endregion
     }
 }
