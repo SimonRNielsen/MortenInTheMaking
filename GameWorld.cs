@@ -51,9 +51,9 @@ namespace MortenInTheMaking
         #region Properties
 
         #region Mouse
-        public static Vector2 MousePosition { get => mousePosition; set => mousePosition = value; }
-        public static bool LeftMouseClick { get => leftMouseClick; set => leftMouseClick = value; }
-        public static bool RightMouseClick { get => rightMouseClick; set => rightMouseClick = value; }
+        public static Vector2 MousePosition { get => mousePosition; }
+        public static bool LeftMouseClick { get => leftMouseClick; }
+        public static bool RightMouseClick { get => rightMouseClick; }
         #endregion
 
         #endregion
