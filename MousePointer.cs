@@ -17,23 +17,35 @@ namespace MortenInTheMaking
 
         #region Fields
 
+        private Enum type;
         private Texture2D sprite;
         private GameObject tempObject;
+        private Vector2 position;
+        private bool leftClick;
+        private bool rightClick;
 
         #endregion
         #region Properties
 
         public Rectangle CollisionBox
         {
-            get { return new Rectangle((int)GameWorld.MousePosition.X, (int)GameWorld.MousePosition.Y, 1, 1); }
+            get { return new Rectangle((int)position.X, (int)position.Y, 1, 1); }
         }
+        public Vector2 Position { get => position; set => position = value; }
+        public bool LeftClick { get => leftClick; set => leftClick = value; }
+        public bool RightClick { get => rightClick; set => rightClick = value; }
 
         #endregion
         #region Constructor
 
-        public MousePointer()
+        public MousePointer(Enum type)
         {
-
+            this.type = type;
+            try
+            {
+                sprite = GameWorld.sprites[type];
+            }
+            catch {}
         }
 
         #endregion
@@ -42,11 +54,11 @@ namespace MortenInTheMaking
         /// <summary>
         /// Draws a custom mousecursor at the location its detected to be in
         /// </summary>
-        /// <param name="spriteBatch">Gameworld logic</param>
+        /// <param name="spriteBatch">GameWorld logic</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             if (sprite != null)
-                spriteBatch.Draw(sprite, GameWorld.MousePosition, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
+                spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
         }
 
         #endregion

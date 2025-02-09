@@ -10,7 +10,9 @@ namespace MortenInTheMaking
     public enum DecorationType
     {
         Table,
-        Chair
+        Chair,
+        Background,
+        Cursor
     }
 
     public enum WorkerID

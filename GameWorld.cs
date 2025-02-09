@@ -19,11 +19,7 @@ namespace MortenInTheMaking
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private static Vector2 mousePosition;
-        private static bool leftMouseClick;
-        private static bool rightMouseClick;
         internal static MousePointer mousePointer;
-        private volatile GameTime gameTime;
         private bool gameRunning = true;
 
         #region Lists
@@ -32,29 +28,25 @@ namespace MortenInTheMaking
         public static List<GameObject> newGameObjects = new List<GameObject>();
 
         #endregion
-        #region Threads
-
-        private Thread drawThread;
-
-        #endregion
         #region Assets
 
-        public static Dictionary<string, Texture2D> sprites = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, Texture2D[]> animations = new Dictionary<string, Texture2D[]>();
+        public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
+        public static Dictionary<Enum, Texture2D[]> animations = new Dictionary<Enum, Texture2D[]>();
         public static Dictionary<string, SoundEffect> soundEffects = new Dictionary<string, SoundEffect>();
         public static Dictionary<string, Song> music = new Dictionary<string, Song>();
         public static SpriteFont gameFont;
 
         #endregion
+        #region Threads
 
+        private Thread drawThread;
+        private Mutex drawMutex = new Mutex();
+
+        #endregion
         #endregion
         #region Properties
 
-        #region Mouse
-        public static Vector2 MousePosition { get => mousePosition; }
-        public static bool LeftMouseClick { get => leftMouseClick; }
-        public static bool RightMouseClick { get => rightMouseClick; }
-        #endregion
+
 
         #endregion
         #region Constructor
@@ -64,8 +56,6 @@ namespace MortenInTheMaking
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            drawThread = new Thread(RunDraw);
-            drawThread.IsBackground = true;
         }
 
         #endregion
@@ -73,28 +63,31 @@ namespace MortenInTheMaking
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            base.Initialize();
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
 
-            base.Initialize();
+            mousePointer = new MousePointer(DecorationType.Cursor);
+            //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            LoadSprites(Content, sprites);
-            LoadAnimations(Content, animations);
-            LoadSounds(Content, soundEffects);
-            LoadMusic(Content, music);
-            gameFont = Content.Load<SpriteFont>("standardFont");
-            mousePointer = new MousePointer();
+            drawThread = new Thread(RunDraw);
+            drawThread.IsBackground = true;
             drawThread.Start();
 
         }
 
         protected override void LoadContent()
         {
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            LoadSprites(Content, sprites);
+            LoadAnimations(Content, animations);
+            LoadSounds(Content, soundEffects);
+            LoadMusic(Content, music);
+            gameFont = Content.Load<SpriteFont>("standardFont");
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -106,10 +99,6 @@ namespace MortenInTheMaking
                 Exit();
             }
 
-            this.gameTime = gameTime;
-
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
 
             foreach (GameObject gameObject in gameObjects)
@@ -118,8 +107,10 @@ namespace MortenInTheMaking
             }
 
             //Add lock here (Critical region) -> Mutex?
+            drawMutex.WaitOne();
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
             gameObjects.AddRange(newGameObjects);
+            drawMutex.ReleaseMutex();
             //
 
             newGameObjects.Clear();
@@ -128,16 +119,19 @@ namespace MortenInTheMaking
 
         protected override void Draw(GameTime gameTime)
         {
+            drawMutex.WaitOne();
+            base.Draw(gameTime);
+            drawMutex.ReleaseMutex();
         }
 
         #region LoadAssets
 
-        private void LoadSprites(ContentManager content, Dictionary<string, Texture2D> sprites)
+        private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
 
         }
 
-        private void LoadAnimations(ContentManager content, Dictionary<string, Texture2D[]> animations)
+        private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
         {
 
         }
@@ -160,22 +154,22 @@ namespace MortenInTheMaking
 
             while (gameRunning)
             {
-                
+                drawMutex.WaitOne();
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-
                 _spriteBatch.Begin();
 
                 mousePointer.Draw(_spriteBatch);
-                if (gameObjects.Count > 0)
+                try
+                {
                     foreach (GameObject gameObject in gameObjects)
                     {
                         gameObject.Draw(_spriteBatch);
                     }
-
-                base.Draw(gameTime);
+                }
+                catch { }
 
                 _spriteBatch.End();
-
+                drawMutex.ReleaseMutex();
             }
 
         }
