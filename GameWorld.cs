@@ -115,6 +115,7 @@ namespace MortenInTheMaking
 
             newGameObjects.Clear();
 
+
         }
 
         protected override void Draw(GameTime gameTime)
