@@ -71,9 +71,9 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(100, 100)));
-            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(100, 100)));
-            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(100, 100)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(100, 100)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
 
 
             drawThread = new Thread(RunDraw);
