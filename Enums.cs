@@ -12,7 +12,8 @@ namespace MortenInTheMaking
         Table,
         Chair,
         Background,
-        Cursor
+        Cursor,
+        SelectionBox
     }
 
     public enum WorkerID

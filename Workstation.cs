@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MortenInTheMaking
 {
-    internal class Workstation : GameObject
+    internal class Workstation : GameObject, ISelectable
     {
         #region Fields
 
@@ -26,6 +26,7 @@ namespace MortenInTheMaking
         {
             Type = type;
             position = spawnPos;
+            GameWorld.locations.Add(type, spawnPos);
         }
 
         #endregion
