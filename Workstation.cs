@@ -26,6 +26,10 @@ namespace MortenInTheMaking
         {
             Type = type;
             position = spawnPos;
+
+            //Selection the sprite
+            this.sprite = GameWorld.sprites[type];
+
         }
 
         #endregion

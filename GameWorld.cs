@@ -71,7 +71,10 @@ namespace MortenInTheMaking
             //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
 
 
-            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(100,100)));
+            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+            gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(0, _graphics.PreferredBackBufferHeight)));
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
@@ -123,9 +126,11 @@ namespace MortenInTheMaking
 
         private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
+            //ProgressBar
             sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
             sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
             sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
+            
             //Decoration
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
@@ -143,8 +148,12 @@ namespace MortenInTheMaking
             sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
 
             //WorkStation
-            sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station")); //Background to the different ressourceType
+            //sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station")); //Background to the different ressourceType
             sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
+            sprites.Add(WorkstationType.CoffeeBeanStation, Content.Load<Texture2D>("Sprites\\coffeebean"));
+            sprites.Add(WorkstationType.MilkStation, Content.Load<Texture2D>("Sprites\\milk"));
+            sprites.Add(WorkstationType.WaterStation, Content.Load<Texture2D>("Sprites\\water"));
+            sprites.Add(WorkstationType.BrewingStation, Content.Load<Texture2D>("Sprites\\cup"));
         }
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
