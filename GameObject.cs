@@ -47,6 +47,7 @@ namespace MortenInTheMaking
         public bool IsAlive { get => isAlive; set => isAlive = value; }
         public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
         public Enum Type { get => type; protected set => type = value; }
+        public float Layer { get => layer; }
 
         #endregion
 

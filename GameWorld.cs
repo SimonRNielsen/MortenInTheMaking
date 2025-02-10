@@ -88,7 +88,7 @@ namespace MortenInTheMaking
 
             #endregion
 
-            gameObjects.Add(new ProgressBar(WorkerID.Irene, new Vector2(500, 500)));
+            gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
 
 
             drawThread = new Thread(RunDraw);
@@ -159,6 +159,7 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
             sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
+            sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
@@ -204,8 +205,9 @@ namespace MortenInTheMaking
             while (gameRunning)
             {
                 drawMutex.WaitOne();
+                Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                _spriteBatch.Begin();
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
                 mousePointer.Draw(_spriteBatch);
                 try

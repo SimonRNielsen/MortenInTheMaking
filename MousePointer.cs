@@ -18,14 +18,15 @@ namespace MortenInTheMaking
 
         #region Fields
 
-        private Enum type;
         private Texture2D sprite;
         private GameObject tempObject;
         private Vector2 position;
         private bool leftClick;
         private bool rightClick;
+        private bool ranLeftClick = false;
+        private bool ranRightClick = false;
         private float selectionBoxScale;
-        private float selectionBoxLayer = 0.99f;
+        private float selectionBoxLayer;
         private Thread inputThread;
 
         #endregion
@@ -36,8 +37,30 @@ namespace MortenInTheMaking
             get { return new Rectangle((int)position.X, (int)position.Y, 1, 1); }
         }
         public Vector2 Position { get => position; }
-        public bool LeftClick { get => leftClick; }
-        public bool RightClick { get => rightClick; }
+        public bool LeftClick
+        {
+            get => leftClick;
+            private set
+            {
+                leftClick = value;
+                if (value == true)
+                    LeftClickEvent();
+                else
+                    ranLeftClick = false;
+            }
+        }
+        public bool RightClick
+        {
+            get => rightClick;
+            private set
+            {
+                rightClick = value;
+                if (value == true)
+                    RightClickEvent();
+                else
+                    ranRightClick = false;
+            }
+        }
 
         #endregion
         #region Constructor
@@ -45,7 +68,6 @@ namespace MortenInTheMaking
         public MousePointer(Enum type)
         {
 
-            this.type = type;
             try
             {
                 sprite = GameWorld.sprites[type];
@@ -61,7 +83,7 @@ namespace MortenInTheMaking
         #region Methods
 
         /// <summary>
-        /// Draws a custom mousecursor at the location its detected to be in
+        /// Draws a custom mousecursor at the location its detected to be in and
         /// </summary>
         /// <param name="spriteBatch">GameWorld logic</param>
         public void Draw(SpriteBatch spriteBatch)
@@ -69,52 +91,64 @@ namespace MortenInTheMaking
             if (sprite != null)
                 spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
             if (tempObject != null)
-                spriteBatch.Draw(GameWorld.sprites[DecorationType.SelectionBox], tempObject.Position, null, Color.White, 0f, Vector2.Zero, selectionBoxScale, SpriteEffects.None, selectionBoxLayer);
+                spriteBatch.Draw(GameWorld.sprites[DecorationType.SelectionBox], tempObject.Position, null, Color.White, 0f, new Vector2((tempObject.Sprite.Width / 2 / selectionBoxScale) + 5, (tempObject.Sprite.Height / 2 / selectionBoxScale) + 5), selectionBoxScale, SpriteEffects.None, selectionBoxLayer);
         }
 
-
+        /// <summary>
+        /// Sets the size and layer of the selection box
+        /// </summary>
         private void SetSelectionBoxSize()
         {
-            selectionBoxScale = MathHelper.Max((tempObject.Sprite.Width / GameWorld.sprites[DecorationType.SelectionBox].Width), (tempObject.Sprite.Height / GameWorld.sprites[DecorationType.SelectionBox].Height));
+
+            selectionBoxScale = Math.Max(tempObject.Sprite.Width / (float)GameWorld.sprites[DecorationType.SelectionBox].Width, tempObject.Sprite.Height / (float)GameWorld.sprites[DecorationType.SelectionBox].Height);
+            selectionBoxLayer = tempObject.Layer + 0.001f;
+
         }
 
-
+        /// <summary>
+        /// Method to run when left mouse is clicked
+        /// </summary>
         private void LeftClickEvent()
         {
-            foreach (GameObject gameObject in GameWorld.gameObjects)
-            {
-                if (gameObject is ISelectable)
+            if (!ranLeftClick)
+                foreach (GameObject gameObject in GameWorld.gameObjects)
                 {
-                    if (gameObject.CollisionBox.Intersects(CollisionBox))
+                    if (gameObject is ISelectable)
                     {
-                        tempObject = gameObject;
-                        SetSelectionBoxSize();
-                        break;
+                        if (gameObject.CollisionBox.Intersects(CollisionBox))
+                        {
+                            tempObject = gameObject;
+                            SetSelectionBoxSize();
+                            break;
+                        }
+                        else
+                            tempObject = null;
                     }
-                    else
-                        tempObject = null;
                 }
-            }
+            ranLeftClick = true;
         }
 
-
+        /// <summary>
+        /// Method to be run when right mouse is clicked
+        /// </summary>
         private void RightClickEvent()
         {
-            if (tempObject != null)
-                if (tempObject is Worker)
-                    foreach (GameObject gameObject in GameWorld.gameObjects)
+            if (tempObject != null && !ranRightClick && tempObject is Worker)
+                foreach (GameObject gameObject in GameWorld.gameObjects)
+                {
+                    if (gameObject is ISelectable && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy && gameObject is Workstation)
                     {
-                        if (gameObject is ISelectable)
-                            if (gameObject.CollisionBox.Intersects(CollisionBox))
-                            {
-                                if (gameObject is Workstation)
-                                {
-                                    (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
-                                }
-                            }
+                        (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
+                        (tempObject as Worker).Busy = true;
+                        break;
                     }
+                }
+            ranRightClick = true;
         }
 
+        /// <summary>
+        /// Thread function to continuously loop HandleInput which translates player input
+        /// </summary>
         private void HandleInput()
         {
 
@@ -122,8 +156,8 @@ namespace MortenInTheMaking
             {
                 var mouseState = Mouse.GetState();
                 position = mouseState.Position.ToVector2();
-                leftClick = mouseState.LeftButton == ButtonState.Pressed;
-                rightClick = mouseState.RightButton == ButtonState.Pressed;
+                LeftClick = mouseState.LeftButton == ButtonState.Pressed;
+                RightClick = mouseState.RightButton == ButtonState.Pressed;
             }
 
         }
