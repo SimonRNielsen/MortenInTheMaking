@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace MortenInTheMaking
         private int coffeeBeans;
         private int water;
         private int milk;
-        private int coffee;
+        private int coffee = 1;
+        public static int Productivity;
 
 
         #endregion
@@ -26,8 +28,34 @@ namespace MortenInTheMaking
 
         #endregion
         #region Constructor
-        public int Water { get => water; set => water = value; }
-        public int Milk { get => milk; set => milk = value; }
+        public int CoffeeBeans
+        {
+            get => coffeeBeans;
+            set
+            {
+                coffeeBeans = value;
+                if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
+                { this.Coffee++; }
+            }
+        }
+        public int Water
+        {
+            get => water;
+            set
+            {
+                water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
+                { this.Coffee++; }
+            }
+        }
+        public int Milk
+        {
+            get => milk;
+            set
+            {
+                milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
+                { Coffee++; }
+            }
+        }
         public int Coffee { get => coffee; set => coffee = value; }
 
 
@@ -43,16 +71,6 @@ namespace MortenInTheMaking
         }
 
         public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
-        public int CoffeeBeans
-        {
-            get => coffeeBeans;
-            set
-            {
-                coffeeBeans = value;
-                if (CoffeeBeans > 0 && Water > 0 && milk > 0)
-                { Coffee++; }
-            }
-        }
         #endregion
         #region Methods
 
@@ -60,16 +78,15 @@ namespace MortenInTheMaking
         {
             while (GameWorld.GameRunning)
             {
-                if (assignedWorker != null && assignedWorker.Position != Position)
+                if (AssignedWorker != null
+                    && (Vector2.Distance(Position, AssignedWorker.Position) < 100)
+                    && ((WorkstationType)type == WorkstationType.CoffeeBeanStation
+                    || (WorkstationType)type == WorkstationType.MilkStation
+                    || (WorkstationType)type == WorkstationType.WaterStation))
                 {
-                    WalkToStation();
-                }
-                if ((WorkstationType)type == WorkstationType.CoffeeBeanStation
-                || (WorkstationType)type == WorkstationType.MilkStation
-                    || (WorkstationType)type == WorkstationType.WaterStation)
-                {
+                    AssignedWorker.Busy = false;
                     color = Color.Green;
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                     if (assignedWorker != null)
                     {
                         assignedWorker.DeliverResource((WorkstationType)type);
@@ -77,16 +94,47 @@ namespace MortenInTheMaking
                     }
                     color = Color.White;
                 }
-                else if (assignedWorker != null && (WorkstationType)type == WorkstationType.BrewingStation)
+                else if (assignedWorker != null
+                    && (WorkstationType)type == WorkstationType.BrewingStation
+                    && Vector2.Distance(Position, AssignedWorker.Position) < 100)
                 {
-                    { Thread.Sleep(40); }
+                    AssignedWorker.Busy = false;
                     if (Coffee > 0)
                     {
-                        //Productivity ++
-
+                        color = Color.Green;
+                        Thread.Sleep(2000);
+                        Coffee--;
+                        Productivity++;
                     }
-
-
+                    else
+                    {
+                        color = Color.Red;
+                        Thread.Sleep(1000);
+                    }
+                    AssignedWorker = null;
+                    color = Color.White;
+                }
+                else if (assignedWorker != null
+                    && (WorkstationType)type == WorkstationType.Computer
+                    && Vector2.Distance(Position, AssignedWorker.Position) < 100)
+                {
+                    AssignedWorker.Busy = false;
+                    if (Productivity > 0)
+                    {
+                        color = Color.Green;
+                        Thread.Sleep(2000);
+                        if (AssignedWorker != null)
+                        {
+                            Productivity--;
+                            //Penge ++
+                        }
+                    }
+                    else
+                    {
+                        color = Color.Red;
+                        Thread.Sleep(500);
+                    }
+                    color = Color.White;
                 }
                 else
                 {
@@ -100,11 +148,7 @@ namespace MortenInTheMaking
             internalWorkstationThread.Start();
         }
 
-        public void WalkToStation()
-        {
-            AssignedWorker.Position = Position;
 
-        }
         #endregion
     }
 }

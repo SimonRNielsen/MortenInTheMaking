@@ -11,7 +11,7 @@ namespace MortenInTheMaking
         void AssignToWorkstation(Worker worker, Workstation workstation)
         {
             workstation.AssignedWorker = worker;
-            worker.Busy = false;
+            worker.Destination = GameWorld.locations[workstation.Type];
         }
     }
 }

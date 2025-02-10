@@ -78,7 +78,7 @@ namespace MortenInTheMaking
 
             #region decoration the office
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
-            gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
+            //gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
 
             int stationMove = 190; //Background to the different kind of stations 
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, 320))); //Top left
@@ -95,9 +95,27 @@ namespace MortenInTheMaking
             drawThread.IsBackground = true;
             drawThread.Start();
 
-            CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, Vector2.Zero);
+            //Workstations:
+            CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320));
             gameObjects.Add(CoffeeBeanStation);
             CoffeeBeanStation.Start();
+
+            MilkStation = new Workstation(WorkstationType.MilkStation, new Vector2(stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2));
+            gameObjects.Add(MilkStation);
+            MilkStation.Start();
+
+            WaterStation = new Workstation(WorkstationType.WaterStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2));
+            gameObjects.Add(WaterStation);
+            WaterStation.Start();
+
+            BrewingStation = new Workstation(WorkstationType.BrewingStation, new Vector2(stationMove / 2, 320));
+            gameObjects.Add(BrewingStation);
+            BrewingStation.Start();
+
+            ComputerStation = new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5));
+            gameObjects.Add(ComputerStation);
+            ComputerStation.Start();
+
 
         }
 
@@ -127,7 +145,7 @@ namespace MortenInTheMaking
 
             foreach (GameObject gameObject in gameObjects)
             {
-
+                gameObject.Update(gameTime);
             }
 
             //Add lock here (Critical region) -> Mutex?
