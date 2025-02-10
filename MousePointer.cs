@@ -49,8 +49,8 @@ namespace MortenInTheMaking
                     ranLeftClick = false;
             }
         }
-        public bool RightClick 
-        { 
+        public bool RightClick
+        {
             get => rightClick;
             private set
             {
@@ -136,12 +136,11 @@ namespace MortenInTheMaking
             if (tempObject != null && !ranRightClick && tempObject is Worker)
                 foreach (GameObject gameObject in GameWorld.gameObjects)
                 {
-                    if (gameObject is ISelectable && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy)
-                        if (gameObject is Workstation)
-                        {
-                            (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
-                            (tempObject as Worker).Busy = true;
-                        }
+                    if (gameObject is ISelectable && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy && gameObject is Workstation)
+                    {
+                        (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
+                        (tempObject as Worker).Busy = true;
+                    }
                 }
             ranRightClick = true;
         }
