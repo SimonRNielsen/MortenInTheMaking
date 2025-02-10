@@ -12,7 +12,8 @@ namespace MortenInTheMaking
         Station,
         //PCStation, 
         Background,
-        Cursor
+        Cursor,
+        SelectionBox
     }
 
     public enum WorkerID
@@ -36,11 +37,11 @@ namespace MortenInTheMaking
     public enum WorkstationType
     {
         Computer,
-        Station
-        //WaterStation,
-        //MilkStation,
-        //CoffeeBeanStation,
-        //BrewingStation
+        //Station,
+        WaterStation,
+        MilkStation,
+        CoffeeBeanStation,
+        BrewingStation
     }
 
     public enum ProgressBarGraphics

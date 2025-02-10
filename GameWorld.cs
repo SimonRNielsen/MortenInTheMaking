@@ -20,8 +20,9 @@ namespace MortenInTheMaking
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         internal static MousePointer mousePointer;
-        private bool gameRunning = true;
-        private List<GameObject> gameObjects = new List<GameObject>();
+        private static bool gameRunning = true;
+        public static List<GameObject> gameObjects = new List<GameObject>();
+        public static Dictionary<Enum, Vector2> locations = new Dictionary<Enum, Vector2>();
 
         #region Assets
 
@@ -41,7 +42,7 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-
+        public static bool GameRunning { get => gameRunning; } 
 
         #endregion
         #region Constructor
@@ -66,12 +67,24 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(950,520)));
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(950, 1000)));
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(950, 1000)));
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(470, 1000)));
 
-            gameObjects.Add(new ProgressBar(WorkerID.Irene, new Vector2(500, 500)));
+            #region decoration the office
+            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+            gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
+
+            int stationMove = 190; //Background to the different kind of stations 
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, 320))); //Top left
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320))); //Top rigth
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom left
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom rigth
+
+            #endregion
+
+            gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
+
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
@@ -123,14 +136,16 @@ namespace MortenInTheMaking
 
         private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
-            //Progessbar
+            //ProgressBar
             sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
             sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
             sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
-
+            
             //Decoration
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
+            sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
+            sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
@@ -145,8 +160,11 @@ namespace MortenInTheMaking
             sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
 
             //WorkStation
-            sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station")); //Background to the different ressourceType
             sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
+            sprites.Add(WorkstationType.CoffeeBeanStation, Content.Load<Texture2D>("Sprites\\coffeebean"));
+            sprites.Add(WorkstationType.MilkStation, Content.Load<Texture2D>("Sprites\\milk"));
+            sprites.Add(WorkstationType.WaterStation, Content.Load<Texture2D>("Sprites\\water"));
+            sprites.Add(WorkstationType.BrewingStation, Content.Load<Texture2D>("Sprites\\cup"));
         }
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
@@ -173,8 +191,9 @@ namespace MortenInTheMaking
             while (gameRunning)
             {
                 drawMutex.WaitOne();
+                Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                _spriteBatch.Begin();
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
                 mousePointer.Draw(_spriteBatch);
                 try
