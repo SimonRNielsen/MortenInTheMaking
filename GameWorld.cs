@@ -143,7 +143,7 @@ namespace MortenInTheMaking
             sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
 
             //WorkStation
-            sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station"));
+            sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station")); //Background to the different ressourceType
             sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
         }
 
