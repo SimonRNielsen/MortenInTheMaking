@@ -20,8 +20,9 @@ namespace MortenInTheMaking
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         internal static MousePointer mousePointer;
-        private bool gameRunning = true;
-        private List<GameObject> gameObjects = new List<GameObject>();
+        private static bool gameRunning = true;
+        public static List<GameObject> gameObjects = new List<GameObject>();
+        public static Dictionary<Enum, Vector2> locations = new Dictionary<Enum, Vector2>();
 
         #region Assets
 
@@ -41,7 +42,7 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-
+        public static bool GameRunning { get => gameRunning; } 
 
         #endregion
         #region Constructor

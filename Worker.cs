@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace MortenInTheMaking
 {
-    internal class Worker : GameObject
+    internal class Worker : GameObject, ISelectable
     {
         #region Fields
 
-
+        private bool busy;
 
         #endregion
         #region Properties
 
-
+        public bool Busy { get => busy; set => busy = value; }
 
         #endregion
         #region Constructor

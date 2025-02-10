@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MortenInTheMaking
 {
-    internal class Workstation : GameObject
+    internal class Workstation : GameObject, ISelectable
     {
         #region Fields
         private bool KeepWorkstationRunning = true;
@@ -31,6 +31,7 @@ namespace MortenInTheMaking
             sprite = GameWorld.sprites[type];
             internalWorkstationThread = new Thread(RunWorkstation);
             internalWorkstationThread.IsBackground = true;
+            GameWorld.locations.Add(type, spawnPos);
         }
 
         #endregion

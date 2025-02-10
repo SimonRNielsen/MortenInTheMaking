@@ -8,5 +8,9 @@ namespace MortenInTheMaking
 {
     internal interface ISelectable
     {
+        void AssignToWorkstation(Worker worker, Workstation workstation)
+        {
+
+        }
     }
 }
