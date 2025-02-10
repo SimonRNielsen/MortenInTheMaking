@@ -28,19 +28,28 @@ namespace MortenInTheMaking
             Type = type;
             position = spawnPos;
 
-            this.sprite = GameWorld.sprites[DecorationType.Background];
-            this.layer = 0.0f;
+            this.scale = 1f;
+
+            //Sprites and layer
+            Types(type);
         }
 
         #endregion
         #region Methods
+         
+        public void Types(Enum type)
+        {
+            this.sprite = GameWorld.sprites[type];
 
-        //public override void LoadContent(ContentManager content)
-        //{
-        //    //base.LoadContent(content);
-
-        //}
-
+            if (type is DecorationType.Background)
+            {
+                this.layer = 0f;
+            }
+            else
+            {
+                this.layer = 0.1f;
+            }
+        }
 
         #endregion
     }
