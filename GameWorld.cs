@@ -66,13 +66,14 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(100, 100)));
-            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(100, 100)));
-            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
-
+            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(950,520)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(1000, 500)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(1000, 100)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(1000, 100)));
 
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+            gameObjects.Add(new ProgressBar(WorkerID.Irene, new Vector2(500, 500)));
 
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(0, _graphics.PreferredBackBufferHeight)));
 
