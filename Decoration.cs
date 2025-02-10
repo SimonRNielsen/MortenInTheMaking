@@ -36,7 +36,7 @@ namespace MortenInTheMaking
 
         #endregion
         #region Methods
-
+         
         public void Types(Enum type)
         {
             this.sprite = GameWorld.sprites[type];
