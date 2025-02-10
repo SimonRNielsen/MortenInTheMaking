@@ -21,13 +21,8 @@ namespace MortenInTheMaking
         private SpriteBatch _spriteBatch;
         internal static MousePointer mousePointer;
         private bool gameRunning = true;
-
-        #region Lists
-
         private List<GameObject> gameObjects = new List<GameObject>();
-        public static List<GameObject> newGameObjects = new List<GameObject>();
 
-        #endregion
         #region Assets
 
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
@@ -76,6 +71,8 @@ namespace MortenInTheMaking
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
 
 
+            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(100,100)));
+
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start();
@@ -112,6 +109,7 @@ namespace MortenInTheMaking
             }
 
 
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -128,6 +126,25 @@ namespace MortenInTheMaking
             sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
             sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
             sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
+            //Decoration
+            sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
+            sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
+
+            //Worker
+            sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
+            sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\philip"));
+            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\rikke"));
+            sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
+
+            //RessourceType
+            sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
+            sprites.Add(RessourceType.Milk, Content.Load<Texture2D>("Sprites\\milk"));
+            sprites.Add(RessourceType.Water, Content.Load<Texture2D>("Sprites\\water"));
+            sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
+
+            //WorkStation
+            sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station")); //Background to the different ressourceType
+            sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
         }
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
