@@ -106,15 +106,6 @@ namespace MortenInTheMaking
 
             }
 
-            //Add lock here (Critical region) -> Mutex?
-            drawMutex.WaitOne();
-            gameObjects.RemoveAll(obj => obj.IsAlive == false);
-            gameObjects.AddRange(newGameObjects);
-            drawMutex.ReleaseMutex();
-            //
-
-            newGameObjects.Clear();
-
 
         }
 
