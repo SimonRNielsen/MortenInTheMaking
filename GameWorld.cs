@@ -66,16 +66,24 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(950,520)));
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(950, 1000)));
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(950, 1000)));
             gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(600, 1000)));
 
+            #region decoration the office
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
-            gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+            gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
+
+            int stationMove = 190; //Background to the different kind of stations
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, 320))); //Top left
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320))); //Top rigth
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom left
+            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom rigth
+
+            #endregion
+
             gameObjects.Add(new ProgressBar(WorkerID.Irene, new Vector2(500, 500)));
 
-            gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(0, _graphics.PreferredBackBufferHeight)));
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
@@ -135,6 +143,7 @@ namespace MortenInTheMaking
             //Decoration
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
+            sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
@@ -149,7 +158,6 @@ namespace MortenInTheMaking
             sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
 
             //WorkStation
-            //sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station")); //Background to the different ressourceType
             sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
             sprites.Add(WorkstationType.CoffeeBeanStation, Content.Load<Texture2D>("Sprites\\coffeebean"));
             sprites.Add(WorkstationType.MilkStation, Content.Load<Texture2D>("Sprites\\milk"));
