@@ -42,4 +42,11 @@ namespace MortenInTheMaking
         //CoffeeBeanStation,
         //BrewingStation
     }
+
+    public enum ProgressBarGraphics
+    { 
+        BarHollow,
+        BarFill,
+        Lightning
+    }
 }
