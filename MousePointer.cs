@@ -140,6 +140,7 @@ namespace MortenInTheMaking
                     {
                         (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
                         (tempObject as Worker).Busy = true;
+                        break;
                     }
                 }
             ranRightClick = true;
