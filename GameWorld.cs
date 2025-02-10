@@ -21,13 +21,8 @@ namespace MortenInTheMaking
         private SpriteBatch _spriteBatch;
         internal static MousePointer mousePointer;
         private bool gameRunning = true;
-
-        #region Lists
-
         private List<GameObject> gameObjects = new List<GameObject>();
-        public static List<GameObject> newGameObjects = new List<GameObject>();
 
-        #endregion
         #region Assets
 
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
@@ -105,15 +100,6 @@ namespace MortenInTheMaking
             {
 
             }
-
-            //Add lock here (Critical region) -> Mutex?
-            drawMutex.WaitOne();
-            gameObjects.RemoveAll(obj => obj.IsAlive == false);
-            gameObjects.AddRange(newGameObjects);
-            drawMutex.ReleaseMutex();
-            //
-
-            newGameObjects.Clear();
 
         }
 
