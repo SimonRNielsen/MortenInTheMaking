@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MortenInTheMaking
 {
-
+    //Enum which doesn't have a sprites to
     public enum DecorationType
     {
         Station,
-        //PCStation,
+        //PCStation, 
         Background,
         Cursor
     }
