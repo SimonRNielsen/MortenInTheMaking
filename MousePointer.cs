@@ -91,13 +91,19 @@ namespace MortenInTheMaking
             if (sprite != null)
                 spriteBatch.Draw(sprite, position, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
             if (tempObject != null)
-                spriteBatch.Draw(GameWorld.sprites[DecorationType.SelectionBox], tempObject.Position, null, Color.White, 0f, Vector2.Zero, selectionBoxScale, SpriteEffects.None, selectionBoxLayer);
+                spriteBatch.Draw(GameWorld.sprites[DecorationType.SelectionBox], tempObject.Position, null, Color.White, 0f, new Vector2((tempObject.Sprite.Width / 2 / selectionBoxScale) + 5, (tempObject.Sprite.Height / 2 / selectionBoxScale) + 5), selectionBoxScale, SpriteEffects.None, selectionBoxLayer);
         }
 
 
         private void SetSelectionBoxSize()
         {
-            selectionBoxScale = Math.Max((float)(tempObject.Sprite.Width / GameWorld.sprites[DecorationType.SelectionBox].Width), (float)(tempObject.Sprite.Height / GameWorld.sprites[DecorationType.SelectionBox].Height));
+            int objectWidth = tempObject.Sprite.Width;
+            int boxWidth = GameWorld.sprites[DecorationType.SelectionBox].Width;
+            int objectHeight = tempObject.Sprite.Height;
+            int boxHeight = GameWorld.sprites[DecorationType.SelectionBox].Height;
+            float width = objectWidth / (float)boxWidth;
+            float height = objectHeight / (float)boxHeight;
+            selectionBoxScale = Math.Max(width, height);
             selectionBoxLayer = tempObject.Layer + 0.001f;
         }
 

@@ -145,6 +145,7 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
             sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
+            sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
