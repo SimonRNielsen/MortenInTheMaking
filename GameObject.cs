@@ -29,6 +29,7 @@ namespace MortenInTheMaking
         private bool isAlive = true;
 
         #endregion
+
         #region Properties
         public Rectangle CollisionBox
         {
@@ -49,6 +50,7 @@ namespace MortenInTheMaking
         public float Layer { get => layer; }
 
         #endregion
+
         #region Constructor
 
 
@@ -59,6 +61,7 @@ namespace MortenInTheMaking
         }
 
         #endregion
+
         #region Methods
 
 
