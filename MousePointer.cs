@@ -20,13 +20,13 @@ namespace MortenInTheMaking
 
         private Texture2D sprite;
         private GameObject tempObject;
-        private static Vector2 position;
-        private static bool leftClick;
-        private static bool rightClick;
+        private Vector2 position;
+        private bool leftClick;
+        private bool rightClick;
         private bool ranLeftClick = false;
         private bool ranRightClick = false;
         private float selectionBoxScale;
-        private float selectionBoxLayer = 0.99f;
+        private float selectionBoxLayer;
         private Thread inputThread;
 
         #endregion
@@ -83,7 +83,7 @@ namespace MortenInTheMaking
         #region Methods
 
         /// <summary>
-        /// Draws a custom mousecursor at the location its detected to be in
+        /// Draws a custom mousecursor at the location its detected to be in and
         /// </summary>
         /// <param name="spriteBatch">GameWorld logic</param>
         public void Draw(SpriteBatch spriteBatch)
@@ -94,20 +94,20 @@ namespace MortenInTheMaking
                 spriteBatch.Draw(GameWorld.sprites[DecorationType.SelectionBox], tempObject.Position, null, Color.White, 0f, new Vector2((tempObject.Sprite.Width / 2 / selectionBoxScale) + 5, (tempObject.Sprite.Height / 2 / selectionBoxScale) + 5), selectionBoxScale, SpriteEffects.None, selectionBoxLayer);
         }
 
-
+        /// <summary>
+        /// Sets the size and layer of the selection box
+        /// </summary>
         private void SetSelectionBoxSize()
         {
-            int objectWidth = tempObject.Sprite.Width;
-            int boxWidth = GameWorld.sprites[DecorationType.SelectionBox].Width;
-            int objectHeight = tempObject.Sprite.Height;
-            int boxHeight = GameWorld.sprites[DecorationType.SelectionBox].Height;
-            float width = objectWidth / (float)boxWidth;
-            float height = objectHeight / (float)boxHeight;
-            selectionBoxScale = Math.Max(width, height);
+
+            selectionBoxScale = Math.Max(tempObject.Sprite.Width / (float)GameWorld.sprites[DecorationType.SelectionBox].Width, tempObject.Sprite.Height / (float)GameWorld.sprites[DecorationType.SelectionBox].Height);
             selectionBoxLayer = tempObject.Layer + 0.001f;
+
         }
 
-
+        /// <summary>
+        /// Method to run when left mouse is clicked
+        /// </summary>
         private void LeftClickEvent()
         {
             if (!ranLeftClick)
@@ -128,13 +128,15 @@ namespace MortenInTheMaking
             ranLeftClick = true;
         }
 
-
+        /// <summary>
+        /// Method to be run when right mouse is clicked
+        /// </summary>
         private void RightClickEvent()
         {
-            if (tempObject != null && !ranRightClick)
+            if (tempObject != null && !ranRightClick && tempObject is Worker)
                 foreach (GameObject gameObject in GameWorld.gameObjects)
                 {
-                    if (gameObject is ISelectable && tempObject is Worker && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy)
+                    if (gameObject is ISelectable && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy)
                         if (gameObject is Workstation)
                         {
                             (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
@@ -144,7 +146,9 @@ namespace MortenInTheMaking
             ranRightClick = true;
         }
 
-
+        /// <summary>
+        /// Thread function to continuously loop HandleInput which translates player input
+        /// </summary>
         private void HandleInput()
         {
 
