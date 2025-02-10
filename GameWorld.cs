@@ -66,12 +66,12 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(100, 100)));
-            gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(100, 100)));
-            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
+            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(950,520)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(1000, 500)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(1000, 100)));
+            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(1000, 100)));
 
-
-            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(100,100)));
+            gameObjects.Add(new ProgressBar(WorkerID.Irene, new Vector2(500, 500)));
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
@@ -123,9 +123,11 @@ namespace MortenInTheMaking
 
         private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
+            //Progessbar
             sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
             sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
             sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
+
             //Decoration
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));

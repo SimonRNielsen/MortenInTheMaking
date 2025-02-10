@@ -12,8 +12,10 @@ namespace MortenInTheMaking
     {
         public ProgressBar(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-            this.scale = 1000f;
+            this.scale = 1f;
+            this.layer = 0.98f;
 
+            this.sprite = GameWorld.sprites[type];
         }
     }
 }

@@ -29,7 +29,7 @@ namespace MortenInTheMaking
             position = spawnPos;
 
             this.sprite = GameWorld.sprites[DecorationType.Background];
-
+            this.layer = 0.0f;
         }
 
         #endregion
