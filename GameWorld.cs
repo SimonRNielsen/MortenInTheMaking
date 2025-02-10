@@ -71,6 +71,11 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
+            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(100, 100)));
+            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(100, 100)));
+            //gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(100, 100)));
+
+
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start();
@@ -120,7 +125,9 @@ namespace MortenInTheMaking
 
         private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
-
+            sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
+            sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
+            sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
         }
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
