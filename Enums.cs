@@ -13,7 +13,8 @@ namespace MortenInTheMaking
         //PCStation, 
         Background,
         Cursor,
-        SelectionBox
+        SelectionBox,
+        Sign
     }
 
     public enum WorkerID
@@ -48,6 +49,14 @@ namespace MortenInTheMaking
     { 
         BarHollow,
         BarFill,
-        Lightning
+        Lightning, 
+        MoneySquare
     }
+    public enum SoundMusic
+    {
+        BackgroundMusic,
+        DoneSoundEffect,
+        BadSoundEffect
+    }
+
 }
