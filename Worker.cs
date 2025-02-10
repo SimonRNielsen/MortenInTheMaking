@@ -51,14 +51,14 @@ namespace MortenInTheMaking
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Position.X+1 < this.Destination.X)
+            if (Position.X+5 < this.Destination.X)
                 velocity += new Vector2(1, 0);
-            else if (Position.X-1 > this.Destination.X)
+            else if (Position.X-5 > this.Destination.X)
                 velocity -= new Vector2(1, 0);
 
-            if (Position.Y+1 < this.Destination.Y)
+            if (Position.Y+5 < this.Destination.Y)
                 velocity += new Vector2(0, 1);
-            else if (Position.Y-1 > this.Destination.Y)
+            else if (Position.Y-5 > this.Destination.Y)
                 velocity -= new Vector2(0, 1);
 
             //Speed for worker walkin vertically or horizontally
