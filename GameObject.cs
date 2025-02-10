@@ -29,6 +29,7 @@ namespace MortenInTheMaking
         private bool isAlive = true;
 
         #endregion
+
         #region Properties
         public Rectangle CollisionBox
         {
@@ -48,6 +49,7 @@ namespace MortenInTheMaking
         public Enum Type { get => type; protected set => type = value; }
 
         #endregion
+
         #region Constructor
 
 
@@ -58,6 +60,7 @@ namespace MortenInTheMaking
         }
 
         #endregion
+
         #region Methods
 
 

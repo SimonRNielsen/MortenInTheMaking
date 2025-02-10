@@ -66,6 +66,8 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
+            gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(100,100)));
+
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start();
@@ -116,7 +118,25 @@ namespace MortenInTheMaking
 
         private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
+            //Decoration
+            sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
+            sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
 
+            //Worker
+            sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
+            sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\philip"));
+            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\rikke"));
+            sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
+
+            //RessourceType
+            sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
+            sprites.Add(RessourceType.Milk, Content.Load<Texture2D>("Sprites\\milk"));
+            sprites.Add(RessourceType.Water, Content.Load<Texture2D>("Sprites\\water"));
+            sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
+
+            //WorkStation
+            sprites.Add(WorkstationType.Station, Content.Load<Texture2D>("Sprites\\station"));
+            sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
         }
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
