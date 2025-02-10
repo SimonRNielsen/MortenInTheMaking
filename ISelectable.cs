@@ -10,7 +10,6 @@ namespace MortenInTheMaking
     {
         void AssignToWorkstation(Worker worker, Workstation workstation)
         {
-            //Walk ...
             workstation.AssignedWorker = worker;
             worker.Busy = false;
         }

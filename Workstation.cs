@@ -11,7 +11,6 @@ namespace MortenInTheMaking
     internal class Workstation : GameObject, ISelectable
     {
         #region Fields
-        private bool KeepWorkstationRunning = true;
         Thread internalWorkstationThread;
         private Worker assignedWorker = null;
         private int coffeeBeans;
@@ -59,10 +58,14 @@ namespace MortenInTheMaking
 
         public void RunWorkstation()
         {
-            while (KeepWorkstationRunning) //Ændre til GameRunning 
+            while (GameWorld.GameRunning)
             {
-                if (assignedWorker != null && ((WorkstationType)type == WorkstationType.CoffeeBeanStation
-                    || (WorkstationType)type == WorkstationType.MilkStation)
+                if (assignedWorker != null && assignedWorker.Position != Position)
+                {
+                    WalkToStation();
+                }
+                if ((WorkstationType)type == WorkstationType.CoffeeBeanStation
+                || (WorkstationType)type == WorkstationType.MilkStation
                     || (WorkstationType)type == WorkstationType.WaterStation)
                 {
                     color = Color.Green;
@@ -79,7 +82,7 @@ namespace MortenInTheMaking
                     { Thread.Sleep(40); }
                     if (Coffee > 0)
                     {
-
+                        //Productivity ++
 
                     }
 
@@ -97,6 +100,11 @@ namespace MortenInTheMaking
             internalWorkstationThread.Start();
         }
 
+        public void WalkToStation()
+        {
+            AssignedWorker.Position = Position;
+
+        }
         #endregion
     }
 }

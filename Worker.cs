@@ -38,8 +38,7 @@ namespace MortenInTheMaking
         public void DeliverResource(WorkstationType workstation)
         {
             destination = GameWorld.locations[WorkstationType.BrewingStation];
-
-            //Walk ...
+            //Walk
             switch (workstation)
             {
                 case WorkstationType.CoffeeBeanStation:
