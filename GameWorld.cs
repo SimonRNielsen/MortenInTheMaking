@@ -175,7 +175,7 @@ namespace MortenInTheMaking
             {
                 drawMutex.WaitOne();
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                _spriteBatch.Begin();
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
                 mousePointer.Draw(_spriteBatch);
                 try
