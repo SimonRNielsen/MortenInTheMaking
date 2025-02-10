@@ -70,6 +70,10 @@ namespace MortenInTheMaking
             drawThread.IsBackground = true;
             drawThread.Start();
 
+            Workstation CofeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, Vector2.Zero);
+            gameObjects.Add(CofeeBeanStation);
+            CofeeBeanStation.Start();
+
         }
 
         protected override void LoadContent()
