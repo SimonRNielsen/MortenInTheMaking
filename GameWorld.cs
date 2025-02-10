@@ -23,6 +23,11 @@ namespace MortenInTheMaking
         private static bool gameRunning = true;
         public static List<GameObject> gameObjects = new List<GameObject>();
         public static Dictionary<Enum, Vector2> locations = new Dictionary<Enum, Vector2>();
+        internal static Workstation CoffeeBeanStation;
+        internal static Workstation MilkStation;
+        internal static Workstation WaterStation;
+        internal static Workstation BrewingStation;
+        internal static Workstation ComputerStation;
 
         #region Assets
 
@@ -71,9 +76,9 @@ namespace MortenInTheMaking
             drawThread.IsBackground = true;
             drawThread.Start();
 
-            Workstation CofeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, Vector2.Zero);
-            gameObjects.Add(CofeeBeanStation);
-            CofeeBeanStation.Start();
+            CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, Vector2.Zero);
+            gameObjects.Add(CoffeeBeanStation);
+            CoffeeBeanStation.Start();
 
         }
 

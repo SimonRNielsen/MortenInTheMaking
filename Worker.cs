@@ -12,11 +12,14 @@ namespace MortenInTheMaking
         #region Fields
 
         private bool busy;
+        private Vector2 destination;
+
 
         #endregion
         #region Properties
 
         public bool Busy { get => busy; set => busy = value; }
+
 
         #endregion
         #region Constructor
@@ -30,7 +33,26 @@ namespace MortenInTheMaking
         #endregion
         #region Methods
 
+        public void DeliverResource(WorkstationType workstation)
+        {
+            destination = GameWorld.locations[WorkstationType.BrewingStation];
 
+            //Walk ...
+            switch (workstation)
+            {
+                case WorkstationType.CoffeeBeanStation:
+                    GameWorld.BrewingStation.CoffeeBeans++;
+                    break;
+                case WorkstationType.WaterStation:
+                    GameWorld.BrewingStation.Water++;
+                    break;
+                case WorkstationType.MilkStation:
+                    GameWorld.BrewingStation.Milk++;
+                    break;
+           }
+
+            
+        }
 
         #endregion
     }
