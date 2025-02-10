@@ -14,7 +14,6 @@ namespace MortenInTheMaking
         {
             this.scale = 1f;
             this.layer = 0.98f;
-
             this.sprite = GameWorld.sprites[type];
         }
     }
