@@ -26,6 +26,10 @@ namespace MortenInTheMaking
 
         #endregion
         #region Constructor
+        public int Water { get => water; set => water = value; }
+        public int Milk { get => milk; set => milk = value; }
+        public int Coffee { get => coffee; set => coffee = value; }
+
 
 
         public Workstation(Enum type, Vector2 spawnPos) : base(type, spawnPos)
@@ -48,15 +52,7 @@ namespace MortenInTheMaking
                 if (CoffeeBeans > 0 && Water > 0 && milk > 0)
                 { Coffee++; }
             }
-            //Selection the sprite
-            this.sprite = GameWorld.sprites[type];
-
-            GameWorld.locations.Add(type, spawnPos);
         }
-        public int Water { get => water; set => water = value; }
-        public int Milk { get => milk; set => milk = value; }
-        public int Coffee { get => coffee; set => coffee = value; }
-
         #endregion
         #region Methods
 
