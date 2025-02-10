@@ -190,6 +190,7 @@ namespace MortenInTheMaking
             while (gameRunning)
             {
                 drawMutex.WaitOne();
+                Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
