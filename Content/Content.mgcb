@@ -13,6 +13,24 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Sounds/achievement-video-game-type-1-230515.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/achievement-video-game-type-1-230515.mp3
+
+#begin Sounds/game-music-loop-19-153393.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/game-music-loop-19-153393.mp3
+
+#begin Sounds/game-start-6104.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/game-start-6104.mp3
+
 #begin Sprites/barFill.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -97,6 +115,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/milk.png
 
+#begin Sprites/money.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/money.png
+
 #begin Sprites/mousePointer.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -169,6 +199,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/selection.png
 
+#begin Sprites/sign.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/sign.png
+
 #begin Sprites/simon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -192,6 +234,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/station.png
+
+#begin Sprites/underCoverMortenSlingGul3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/underCoverMortenSlingGul3.png
 
 #begin Sprites/water.png
 /importer:TextureImporter
