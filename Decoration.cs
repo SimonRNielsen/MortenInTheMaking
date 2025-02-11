@@ -49,7 +49,7 @@ namespace MortenInTheMaking
             else if (type is DecorationType.Morten)
             {
                 this.scale = 0.25f;
-                this.SpriteEffectIndex = 1;
+                this.SpriteEffectIndex = 1; 
             }
 
         }
