@@ -13,7 +13,8 @@ namespace MortenInTheMaking
         //PCStation, 
         Background,
         Cursor,
-        SelectionBox
+        SelectionBox,
+        Morten
     }
 
     public enum WorkerID

@@ -75,6 +75,8 @@ namespace MortenInTheMaking
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
 
+            gameObjects.Add(new Decoration(DecorationType.Morten, new Vector2(1400, 200))); //Undercover Morten
+
             int stationMove = 190; //Background to the different kind of stations 
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, 320))); //Top left
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320))); //Top rigth
@@ -146,6 +148,7 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
             sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
             sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
+            sprites.Add(DecorationType.Morten, Content.Load<Texture2D>("Sprites\\underCoverMortenSlingGul3"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));

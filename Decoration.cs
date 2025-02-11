@@ -29,6 +29,7 @@ namespace MortenInTheMaking
             position = spawnPos;
 
             this.scale = 1f;
+            this.layer = 0.1f;
 
             //Sprites and layer
             Types(type);
@@ -45,10 +46,12 @@ namespace MortenInTheMaking
             {
                 this.layer = 0f;
             }
-            else
+            else if (type is DecorationType.Morten)
             {
-                this.layer = 0.1f;
+                this.scale = 0.25f;
+                this.SpriteEffectIndex = 1;
             }
+
         }
 
         #endregion
