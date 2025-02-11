@@ -14,6 +14,8 @@ namespace MortenInTheMaking
         Background,
         Cursor,
         SelectionBox,
+        Sign
+        SelectionBox,
         Morten
     }
 
@@ -49,6 +51,14 @@ namespace MortenInTheMaking
     { 
         BarHollow,
         BarFill,
-        Lightning
+        Lightning, 
+        MoneySquare
     }
+    public enum SoundMusic
+    {
+        BackgroundMusic,
+        DoneSoundEffect,
+        BadSoundEffect
+    }
+
 }

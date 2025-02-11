@@ -67,13 +67,16 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarHollow, new Vector2(950, 1000)));
-            gameObjects.Add(new ProgressBar(ProgressBarGraphics.BarFill, new Vector2(950, 1000)));
-            gameObjects.Add(new ProgressBar(ProgressBarGraphics.Lightning, new Vector2(600, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.BarHollow, new Vector2(780, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.BarFill, new Vector2(780, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.Lightning, new Vector2(280, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.MoneySquare, new Vector2(1500, 1000)));
+
 
             #region decoration the office
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
+            gameObjects.Add(new Decoration(DecorationType.Sign, new Vector2(960, 80)));
 
             gameObjects.Add(new Decoration(DecorationType.Morten, new Vector2(1400, 200))); //Undercover Morten
 
@@ -86,7 +89,6 @@ namespace MortenInTheMaking
             #endregion
 
             gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
-
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
@@ -142,13 +144,15 @@ namespace MortenInTheMaking
             sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
             sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
             sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
-            
+            sprites.Add(ProgressBarGraphics.MoneySquare, Content.Load<Texture2D>("Sprites\\money"));
+
             //Decoration
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
             sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
             sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
             sprites.Add(DecorationType.Morten, Content.Load<Texture2D>("Sprites\\underCoverMortenSlingGul3"));
+            sprites.Add(DecorationType.Sign, Content.Load<Texture2D>("Sprites\\sign"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
@@ -182,7 +186,10 @@ namespace MortenInTheMaking
 
         private void LoadMusic(ContentManager content, Dictionary<string, Song> songs)
         {
-
+            music.Add("backgroundMusic", Content.Load<Song>("Sounds\\game-music-loop-19-153393"));
+            MediaPlayer.Play(music["backgroundMusic"]);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.15f;
         }
 
         #endregion
