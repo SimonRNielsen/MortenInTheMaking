@@ -23,6 +23,11 @@ namespace MortenInTheMaking
         private static bool gameRunning = true;
         public static List<GameObject> gameObjects = new List<GameObject>();
         public static Dictionary<Enum, Vector2> locations = new Dictionary<Enum, Vector2>();
+        internal static Workstation CoffeeBeanStation;
+        internal static Workstation MilkStation;
+        internal static Workstation WaterStation;
+        internal static Workstation BrewingStation;
+        internal static Workstation ComputerStation;
 
         #region Assets
 
@@ -66,15 +71,15 @@ namespace MortenInTheMaking
             _graphics.ApplyChanges();
 
             mousePointer = new MousePointer(DecorationType.Cursor);
-            //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
 
 
             #region decoration the office
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
-            gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5)));
+            //gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5))); Note form Philip: Moved it down with other workstations
             gameObjects.Add(new Decoration(DecorationType.Sign, new Vector2(960, 80)));
 
+            gameObjects.Add(new Decoration(DecorationType.Morten, new Vector2(1400, 200))); //Undercover Morten
 
             int stationMove = 190; //Background to the different kind of stations 
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, 320))); //Top left
@@ -90,11 +95,37 @@ namespace MortenInTheMaking
             gameObjects.Add(new ProductivityManager(OverlayGraphics.MoneySquare, new Vector2(1300, 950)));
             #endregion
 
-            gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
+            //Worker
+            gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 510)));
+            gameObjects.Add(new Worker(WorkerID.Simon, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 670)));
+            gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 505)));
+            gameObjects.Add(new Worker(WorkerID.Rikke, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 670)));
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start();
+
+            //Workstations:
+            CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320));
+            gameObjects.Add(CoffeeBeanStation);
+            CoffeeBeanStation.Start();
+
+            MilkStation = new Workstation(WorkstationType.MilkStation, new Vector2(stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2));
+            gameObjects.Add(MilkStation);
+            MilkStation.Start();
+
+            WaterStation = new Workstation(WorkstationType.WaterStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2));
+            gameObjects.Add(WaterStation);
+            WaterStation.Start();
+
+            BrewingStation = new Workstation(WorkstationType.BrewingStation, new Vector2(stationMove / 2, 320));
+            gameObjects.Add(BrewingStation);
+            BrewingStation.Start();
+
+            ComputerStation = new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5));
+            gameObjects.Add(ComputerStation);
+            ComputerStation.Start();
+
 
         }
 
@@ -124,9 +155,14 @@ namespace MortenInTheMaking
 
             foreach (GameObject gameObject in gameObjects)
             {
-
+                gameObject.Update(gameTime);
             }
 
+            //Add lock here (Critical region) -> Mutex?
+            drawMutex.WaitOne();
+            gameObjects.RemoveAll(obj => obj.IsAlive == false);
+            drawMutex.ReleaseMutex();
+            //
 
 
         }
@@ -153,6 +189,7 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.Station, Content.Load<Texture2D>("Sprites\\station"));
             sprites.Add(DecorationType.Cursor, Content.Load<Texture2D>("Sprites\\mousePointer"));
             sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
+            sprites.Add(DecorationType.Morten, Content.Load<Texture2D>("Sprites\\underCoverMortenSlingGul3"));
             sprites.Add(DecorationType.Sign, Content.Load<Texture2D>("Sprites\\sign"));
 
             //Worker

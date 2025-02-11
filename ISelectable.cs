@@ -10,7 +10,8 @@ namespace MortenInTheMaking
     {
         void AssignToWorkstation(Worker worker, Workstation workstation)
         {
-
+            workstation.AssignedWorker = worker;
+            worker.Destination = GameWorld.locations[workstation.Type];
         }
     }
 }
