@@ -42,7 +42,8 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-        public static bool GameRunning { get => gameRunning; } 
+        public static bool GameRunning { get => gameRunning; }
+        public SpriteBatch SpriteBatch { get => _spriteBatch; set => _spriteBatch = value; }
 
         #endregion
         #region Constructor
@@ -67,10 +68,6 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
             //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
-            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.BarHollow, new Vector2(780, 1000)));
-            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.BarFill, new Vector2(780, 1000)));
-            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.Lightning, new Vector2(280, 1000)));
-            gameObjects.Add(new ProductivityManager(ProgressBarGraphics.MoneySquare, new Vector2(1500, 1000)));
 
 
             #region decoration the office
@@ -86,6 +83,12 @@ namespace MortenInTheMaking
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom rigth
 
             #endregion
+            #region overlay
+            gameObjects.Add(new ProductivityManager(OverlayGraphics.BarHollow, new Vector2(299, 975)));
+            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(303, 980)));
+            gameObjects.Add(new ProductivityManager(OverlayGraphics.Lightning, new Vector2(280, 950)));
+            gameObjects.Add(new ProductivityManager(OverlayGraphics.MoneySquare, new Vector2(1300, 950)));
+            #endregion
 
             gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
 
@@ -98,7 +101,7 @@ namespace MortenInTheMaking
         protected override void LoadContent()
         {
 
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadSprites(Content, sprites);
             LoadAnimations(Content, animations);
@@ -140,10 +143,10 @@ namespace MortenInTheMaking
         private void LoadSprites(ContentManager content, Dictionary<Enum, Texture2D> sprites)
         {
             //ProgressBar
-            sprites.Add(ProgressBarGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
-            sprites.Add(ProgressBarGraphics.BarFill, Content.Load<Texture2D>("Sprites\\barFill"));
-            sprites.Add(ProgressBarGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
-            sprites.Add(ProgressBarGraphics.MoneySquare, Content.Load<Texture2D>("Sprites\\money"));
+            sprites.Add(OverlayGraphics.BarHollow, Content.Load<Texture2D>("Sprites\\barHollow"));
+            sprites.Add(ProgressFilling.BarFilling, Content.Load<Texture2D>("Sprites\\barFill"));
+            sprites.Add(OverlayGraphics.Lightning, Content.Load<Texture2D>("Sprites\\lyn"));
+            sprites.Add(OverlayGraphics.MoneySquare, Content.Load<Texture2D>("Sprites\\money"));
 
             //Decoration
             sprites.Add(DecorationType.Background, Content.Load<Texture2D>("Sprites\\office_background"));
@@ -201,19 +204,19 @@ namespace MortenInTheMaking
                 drawMutex.WaitOne();
                 Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
+                SpriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
-                mousePointer.Draw(_spriteBatch);
+                mousePointer.Draw(SpriteBatch);
                 try
                 {
                     foreach (GameObject gameObject in gameObjects)
                     {
-                        gameObject.Draw(_spriteBatch);
+                        gameObject.Draw(SpriteBatch);
                     }
                 }
                 catch { }
 
-                _spriteBatch.End();
+                SpriteBatch.End();
                 drawMutex.ReleaseMutex();
             }
 

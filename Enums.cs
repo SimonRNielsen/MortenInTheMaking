@@ -45,13 +45,19 @@ namespace MortenInTheMaking
         BrewingStation
     }
 
-    public enum ProgressBarGraphics
+    public enum OverlayGraphics
     { 
         BarHollow,
         BarFill,
         Lightning, 
         MoneySquare
     }
+
+    public enum ProgressFilling
+    { 
+        BarFilling
+    }
+
     public enum SoundMusic
     {
         BackgroundMusic,
