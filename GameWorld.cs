@@ -95,7 +95,7 @@ namespace MortenInTheMaking
             //Worker
             gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 510)));
             gameObjects.Add(new Worker(WorkerID.Simon, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 670)));
-            gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 510)));
+            gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 505)));
             gameObjects.Add(new Worker(WorkerID.Rikke, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 670)));
 
             drawThread = new Thread(RunDraw);
