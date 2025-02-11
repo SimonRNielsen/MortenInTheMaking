@@ -89,7 +89,6 @@ namespace MortenInTheMaking
 
             gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
 
-
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start();
