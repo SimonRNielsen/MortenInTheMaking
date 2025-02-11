@@ -11,6 +11,12 @@ namespace MortenInTheMaking
 {
     internal class Workstation : GameObject, ISelectable
     {
+        /* TODO:
+         * Add documentation
+         * Make specific destination for computerstation, denpendent on WorkerType
+         * Use some sort of synchronisation such as lock or semafor, to make sure only one worker can ve at a workstation at a time (other than computer)
+         * 
+         * */
         #region Fields
         Thread internalWorkstationThread;
         private Worker assignedWorker = null;
