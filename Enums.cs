@@ -14,8 +14,7 @@ namespace MortenInTheMaking
         Background,
         Cursor,
         SelectionBox,
-        Sign
-        SelectionBox,
+        Sign,
         Morten
     }
 
