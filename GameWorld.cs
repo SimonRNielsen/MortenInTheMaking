@@ -70,7 +70,6 @@ namespace MortenInTheMaking
             _graphics.ApplyChanges();
 
             mousePointer = new MousePointer(DecorationType.Cursor);
-            //gameObjects.Add(new Worker(WorkerID.Simon, Vector2.Zero));
 
             gameObjects.Add(new ProductivityManager(ProgressBarGraphics.BarHollow, new Vector2(780, 1000)));
             gameObjects.Add(new ProductivityManager(ProgressBarGraphics.BarFill, new Vector2(780, 1000)));
@@ -93,7 +92,11 @@ namespace MortenInTheMaking
 
             #endregion
 
-            gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(500, 500)));
+            //Worker
+            gameObjects.Add(new Worker(WorkerID.Irene, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 510)));
+            gameObjects.Add(new Worker(WorkerID.Simon, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 670)));
+            gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 510)));
+            gameObjects.Add(new Worker(WorkerID.Rikke, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 670)));
 
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
