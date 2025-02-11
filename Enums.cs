@@ -33,7 +33,8 @@ namespace MortenInTheMaking
         Water,
         CoffeeBeans,
         Money,
-        Productivity
+        Productivity,
+        Status
     }
 
     public enum WorkstationType

@@ -155,6 +155,9 @@ namespace MortenInTheMaking
         }
 
 
+        public int Kaffe() => CoffeeBeans;
+
+
         #endregion
     }
 }
