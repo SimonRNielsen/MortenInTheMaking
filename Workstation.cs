@@ -41,9 +41,6 @@ namespace MortenInTheMaking
                     return new Rectangle();
             }
         }
-
-        #endregion
-        #region Constructor
         public int CoffeeBeans
         {
             get => coffeeBeans;
@@ -73,6 +70,9 @@ namespace MortenInTheMaking
             }
         }
         public int Coffee { get => coffee; set => coffee = value; }
+
+        #endregion
+        #region Constructor
 
 
 
