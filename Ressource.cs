@@ -42,7 +42,8 @@ namespace MortenInTheMaking
             int milk = GameWorld.BrewingStation.Milk;
             int coffebean = GameWorld.BrewingStation.CoffeeBeans;
             int coffee = GameWorld.BrewingStation.Coffee;
-            return $"Coffee bean: {coffebean} \n" +
+            return 
+                $"Coffee bean: {coffebean} \n" +
                 $"Milk: {milk} \n" +
                 $"Water : {water} \n" +
                 $"Coffee: {coffee}";

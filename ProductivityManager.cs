@@ -16,10 +16,11 @@ namespace MortenInTheMaking
     internal class ProductivityManager : GameObject
     {
         #region fields
-        private int productivity = 50; //produktivitet starter på 50%
+        public static int productivity = 50; //produktivitet starter på 50%
         private int maxProductivity = 100;
+        private readonly object productivityLock = new object();
 
-        public int Money { get; private set; } = 0; //Start sum
+        public static int Money { get; private set; } = 0; //Start sum
 
         private bool running = true;
         private Thread ProductivityThread;
@@ -59,10 +60,11 @@ namespace MortenInTheMaking
         //    ProductivityThread.Join(); 
         //}
 
-        public void DrinkCoffee()
-        {
-            productivity = 20; //øger produktivitet
-        }
+        //public void DrinkCoffee()
+        //{
+        //    int coffee = GameWorld.BrewingStation.Coffee;
+
+        //}
 
         public void WorkAtComputer()
         {
@@ -73,6 +75,8 @@ namespace MortenInTheMaking
                 productivity -= 1;
             }
         }
+
+
 
         public void UpdateProductivity()
         {
@@ -85,7 +89,6 @@ namespace MortenInTheMaking
                 }
 
                 //productivity = MathHelper.Clamp(productivity, 0, maxProductivity);
-
                 Thread.Sleep(1000);//Opdaterer hvert 1 sek
 
             }
@@ -96,6 +99,8 @@ namespace MortenInTheMaking
 
             if (running)
             {
+                productivity = GameWorld.BrewingStation.Coffee;
+
                 // Udregn skaleret bredde korrekt
                 float scaleX = (float)productivity / maxProductivity;
                 int scaledWidth = (int)MathF.Round(sprite.Width * scaleX);
