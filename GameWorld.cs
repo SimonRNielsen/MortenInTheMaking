@@ -234,14 +234,10 @@ namespace MortenInTheMaking
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
                 mousePointer.Draw(_spriteBatch);
-                try
+                foreach (GameObject gameObject in gameObjects)
                 {
-                    foreach (GameObject gameObject in gameObjects)
-                    {
-                        gameObject.Draw(_spriteBatch);
-                    }
+                    gameObject.Draw(_spriteBatch);
                 }
-                catch { }
 
                 _spriteBatch.End();
                 drawMutex.ReleaseMutex();
