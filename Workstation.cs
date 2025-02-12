@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
@@ -117,6 +118,7 @@ namespace MortenInTheMaking
                     AssignedWorker.Busy = false;
                     if (Coffee > 0)
                     {
+                        GameWorld.soundEffects["brewingMusic"].Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
