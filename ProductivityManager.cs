@@ -16,7 +16,7 @@ namespace MortenInTheMaking
     internal class ProductivityManager : Overlay
     {
         #region fields
-        private int productivity; //produktivitet starter på 50%
+        private int productivity = 50; //produktivitet starter på 50%
         private int maxProductivity = 100;
 
         public int Money { get; private set; } = 0; //Start sum
@@ -30,10 +30,17 @@ namespace MortenInTheMaking
         #endregion
         #region Constructor
 
+
+
+        /// <summary>
+        /// Constructor for "baren" der fylder produktivitet
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="spawnPos"></param>
+        /// <param name="test"></param>
         public ProductivityManager(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-            this.scale = 1f;
-            this.layer = 0.98f;
+            this.layer = 0.99f;
             this.sprite = GameWorld.sprites[type];
 
             ProductivityThread = new Thread(UpdateProductivity);
@@ -91,21 +98,26 @@ namespace MortenInTheMaking
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (type == (Enum)ProgressFilling.BarFilling)
+
+            if (running)
             {
-                // Udregn skaleret bredde
-                int scaleX = productivity / maxProductivity;
-                float scaledWidth = sprite.Width * scaleX;
-                int scaleWidthInt = Convert.ToInt32(scaledWidth);
+                // Udregn skaleret bredde korrekt
+                float scaleX = (float)productivity / maxProductivity;
+                int scaledWidth = (int)MathF.Round(sprite.Width * scaleX);
+
+                // Sørg for, at vi ikke tegner en negativ bredde
+                scaledWidth = Math.Max(0, scaledWidth);
 
                 // Tegn kun den del af baren, der er fyldt
-                Rectangle sourceRectangle = new Rectangle(0, 0, scaleWidthInt, sprite.Height);
+                Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, sprite.Height);
                 spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White);
             }
             else
             {
+
                 // Tegn den normale, ikke-fyldte bar
                 spriteBatch.Draw(GameWorld.sprites[type], position, Color.White);
+
             }
         }
 

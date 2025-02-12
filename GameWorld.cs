@@ -89,10 +89,13 @@ namespace MortenInTheMaking
 
             #endregion
             #region overlay
-            gameObjects.Add(new ProductivityManager(OverlayGraphics.BarHollow, new Vector2(299, 975)));
-            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(303, 980)));
-            gameObjects.Add(new ProductivityManager(OverlayGraphics.Lightning, new Vector2(280, 950)));
-            gameObjects.Add(new ProductivityManager(OverlayGraphics.MoneySquare, new Vector2(1300, 950)));
+            gameObjects.Add(new ProgressBar(OverlayGraphics.MoneySquare, new Vector2(1300, 950)));
+            gameObjects.Add(new ProgressBar(OverlayGraphics.BarHollow, new Vector2(800, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(300, 980)));
+            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(300, 980)));
+
+            gameObjects.Add(new ProgressBar(OverlayGraphics.Lightning, new Vector2(280, 950)));
+            gameObjects.Add(new ProgressBar(OverlayGraphics.Lightning, new Vector2(280, 1050)));
             #endregion
 
             //Worker
@@ -159,9 +162,9 @@ namespace MortenInTheMaking
             }
 
             //Add lock here (Critical region) -> Mutex?
-            drawMutex.WaitOne();
+            //drawMutex.WaitOne();
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
-            drawMutex.ReleaseMutex();
+            //drawMutex.ReleaseMutex();
             //
 
 
