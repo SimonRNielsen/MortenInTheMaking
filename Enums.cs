@@ -15,6 +15,8 @@ namespace MortenInTheMaking
         Cursor,
         SelectionBox,
         Sign,
+        Morten, 
+        BarBlack
         Morten,
         Start,
         End
@@ -49,13 +51,19 @@ namespace MortenInTheMaking
         BrewingStation
     }
 
-    public enum ProgressBarGraphics
+    public enum OverlayGraphics
     { 
         BarHollow,
         BarFill,
         Lightning, 
         MoneySquare
     }
+
+    public enum ProgressFilling
+    { 
+        BarFilling
+    }
+
     public enum SoundMusic
     {
         BackgroundMusic,

@@ -42,7 +42,8 @@ namespace MortenInTheMaking
             int milk = GameWorld.BrewingStation.Milk;
             int coffebean = GameWorld.BrewingStation.CoffeeBeans;
             int coffee = GameWorld.BrewingStation.Coffee;
-            return $"Coffee bean: {coffebean} \n" +
+            return 
+                $"Coffee bean: {coffebean} \n" +
                 $"Milk: {milk} \n" +
                 $"Water : {water} \n" +
                 $"Coffee: {coffee}";
@@ -50,6 +51,9 @@ namespace MortenInTheMaking
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1480 - (GameWorld.Money.ToString().Length * +5), 980), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
+            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
             
             spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.3f);
 

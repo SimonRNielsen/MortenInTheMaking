@@ -1,21 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct3D11;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MortenInTheMaking
 {
-    internal class ProductivityManager : Overlay
+    internal class ProductivityManager : GameObject
     {
         #region fields
-        private float productivity = 50f; //produktivitet starter på 50%
-        private float maxProductivity = 100f;
+        private int maxProductivity = 100;
 
-        public int Money { get; private set; } = 0; //Start sum
 
         private bool running = true;
-        private Thread productivityThread;
+        private Thread ProductivityThread;
+        private int productivity;
 
         #endregion
         #region Properties
@@ -23,120 +29,79 @@ namespace MortenInTheMaking
         #endregion
         #region Constructor
 
+
+
+        /// <summary>
+        /// Constructor for "baren" der fylder produktivitet
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="spawnPos"></param>
+        /// <param name="test"></param>
         public ProductivityManager(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-            this.scale = 1f;
             this.layer = 0.98f;
             this.sprite = GameWorld.sprites[type];
 
-            productivityThread = new Thread(UpdateProductivity);
-            productivityThread.IsBackground = true;
-            productivityThread.Start();
+            ProductivityThread = new Thread(UpdateProductivity);
+            ProductivityThread.IsBackground = true;
+            ProductivityThread.Start();
         }
 
-        //public ProductivityManager(Enum type, Vector2 spawnPos /*Texture2D bar*/) : base(type, spawnPos)
-        //{
-        //    this.scale = 1f;
-        //    this.layer = 0.98f;
-        //    this.sprite = GameWorld.sprites[type];
-        //    bar = GameWorld.sprites[ProgressBarGraphics.BarFill];
 
-        //    productivityThread = new Thread(UpdateProductivity);
-        //    productivityThread.IsBackground = true;
-        //    productivityThread.Start();
-        //}
         #endregion
         #region methods
-
-
-        //public void StartThread()
+        //public void DrinkCoffee()
         //{
-        //    productivityThread.Start();
+        //    int coffee = GameWorld.BrewingStation.Coffee;
         //}
 
-        public void StopThread()
-        {
-            running = false;
-            productivityThread.Join();
-        }
+       
 
-        public void DrinkCoffee()
-        {
-            productivity = Math.Min(maxProductivity, productivity + 20f); //øger produktivitet
-        }
 
-        public void WorkAtComputer()
-        {
-            if (productivity > 0)
-            {
-                Money += 5;
-                productivity -= 10;
-            }
-        }
 
         public void UpdateProductivity()
         {
             while (running)
             {
-                if (productivity > 0)
-                {
-                    productivity -= 0.1f; //dræner produktivitet hele tiden, langsomt over tid
-                }
+                //if (productivity > 0)
+                //{
+                    Thread.Sleep(2000);
+                    //productivity--; //dræner produktivitet hele tiden, langsomt over tid
+                    productivity = GameWorld.Productivity;
+                //}
 
-                productivity = MathHelper.Clamp(productivity, 0, maxProductivity);
 
-                Thread.Sleep(100);//Opdaterer hvert 100 ms
+                //productivity = MathHelper.Clamp(productivity, 0, maxProductivity);
+                Thread.Sleep(1000);//Opdaterer hvert 1 sek
+
             }
         }
 
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    if (texture == null)
-        //        return;
-        //    //Texture2D texture = GameWorld.sprites[type];
+        public override void Draw(SpriteBatch spriteBatch)
+        {
 
-        //        if (type == (Enum)ProgressBarGraphics.BarFill)
-        //    {
-        //            // Udregn skaleret bredde
-        //            float scaleX = productivity / maxProductivity;
-        //            int scaledWidth = (int)(texture.Width * scaleX);
+            if (running)
+            {
 
-        //            // Tegn kun den del af baren, der er fyldt
-        //            Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, texture.Height);
-        //            spriteBatch.Draw(texture, position, sourceRectangle, Color.White);
-        //        }
-        //        else
-        //        {
-        //            // Tegn den normale, ikke-fyldte bar
-        //            spriteBatch.Draw(texture, position, Color.White);
-        //        }
-            
-        //}
+                // Udregn skaleret bredde korrekt
+                float scaleX = (float)GameWorld.Productivity / maxProductivity;
+                int scaledWidth = (int)MathF.Round(sprite.Width * scaleX);
 
-        //public void UpdateProductivity(float value)
-        //{
-        //    productivity = MathHelper.Clamp(value, 0, maxProductivity);
-        //}
+                // Sørg for, at vi ikke tegner en negativ bredde
+                scaledWidth = Math.Max(0, scaledWidth);
 
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    if (GameWorld.sprites.ContainsKey(type))
-        //    {
-        //        Texture2D texture = GameWorld.sprites[type];
+                // Tegn kun den del af baren, der er fyldt
+                Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, sprite.Height);
+                spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, layer);
+            }
+            //else
+            //{
 
-        //        if(type == ProgressBarGraphics.BarFill)
-        //        {
-        //            float scaleX = productivity / maxProductivity;
-        //            Rectangle sourceRectangle = new Rectangle(0, 0, (int)(texture.Width * scaleX), texture.Height);
+            //    // Tegn den normale, ikke-fyldte bar
+            //    spriteBatch.Draw(GameWorld.sprites[type], position, Color.White);
 
-        //            spriteBatch.Draw(texture, position, sourceRectangle, Color.White);
-        //        }
-        //        else 
-        //        {
-        //            spriteBatch.Draw(texture, position, Color.White);
-        //        }
-        //    }
-        //}
+            //}
+        }
 
         #endregion
     }

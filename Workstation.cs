@@ -50,7 +50,7 @@ namespace MortenInTheMaking
             {
                 coffeeBeans = value;
                 if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
         public int Water
@@ -59,7 +59,7 @@ namespace MortenInTheMaking
             set
             {
                 water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
         public int Milk
@@ -68,10 +68,10 @@ namespace MortenInTheMaking
             set
             {
                 milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
-        public int Coffee { get => coffee; set => coffee = value; }
+        public int Coffee { get => coffee; set { coffee = value; } }
 
         public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
         internal List<Worker> WorkersAtComputer { get => workersAtComputer; set => workersAtComputer = value; }
@@ -124,7 +124,7 @@ namespace MortenInTheMaking
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
-                        Productivity++;
+                        GameWorld.Productivity++;
                     }
                     else
                     {
@@ -136,24 +136,24 @@ namespace MortenInTheMaking
                 }
                 else if (workersAtComputer.LongCount() > 0
                     && (WorkstationType)type == WorkstationType.Computer
-                    && Vector2.Distance(WorkersAtComputer[0].SpawnPosition, WorkersAtComputer[0].Position) <10)
+                    && Vector2.Distance(WorkersAtComputer[0].SpawnPosition, WorkersAtComputer[0].Position) < 10)
                 {
                     foreach (Worker w in workersAtComputer)
                     {
-                        if(Vector2.Distance(w.SpawnPosition, w.Position) < 100)
+                        if (Vector2.Distance(w.SpawnPosition, w.Position) < 100)
                         {
                             w.Busy = false;
                         }
                     }
-                    if (Productivity > 0)
+                    if (GameWorld.Productivity > 0)
                     {
                         GameWorld.soundEffects["typingSound"].Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         foreach (Worker w in WorkersAtComputer)
                         {
-                            Productivity--;
-                            //Penge ++
+                            GameWorld.Productivity--;
+                            GameWorld.Money += 10;
                         }
                     }
                     else
