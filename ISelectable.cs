@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,26 @@ namespace MortenInTheMaking
         void AssignToWorkstation(Worker worker, Workstation workstation)
         {
             workstation.AssignedWorker = worker;
-            worker.Destination = GameWorld.locations[workstation.Type];
+            if ((WorkstationType)workstation.Type != WorkstationType.Computer)
+            {
+                worker.Destination = GameWorld.locations[workstation.Type];
+            }
+            else if ((WorkstationType)workstation.Type == WorkstationType.Computer)
+            {
+                switch ((WorkerID)worker.Type)
+                {
+                    case WorkerID.Irene:
+                        worker.Destination = new Vector2(GameWorld._graphics.PreferredBackBufferWidth / 2 - 150, 510))
+                        break;
+
+                    case WorkerID.Philip:
+                        break;
+                    case WorkerID.Rikke:
+                        break;
+                    case WorkerID.Simon:
+                        break;
+
+                }
         }
     }
 }
