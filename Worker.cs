@@ -94,7 +94,7 @@ namespace MortenInTheMaking
 
             velocity = Vector2.Zero;
 
-            if (Vector2.Distance(position, spawnPosition) < 5)
+            if (Vector2.Distance(position, spawnPosition) < 10)
                 switch ((WorkerID)type)
                 {
                     case WorkerID.Philip:
