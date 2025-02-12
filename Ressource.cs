@@ -12,11 +12,9 @@ namespace MortenInTheMaking
     internal class Ressource : GameObject
     {
         #region Fields
-        Thread statusThread;
         #endregion
 
         #region Properties
-
 
 
         #endregion
@@ -26,13 +24,8 @@ namespace MortenInTheMaking
 
         public Ressource(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-            this.layer = 0.99f;
             Type = type;
             position = spawnPos;
-
-
-            statusThread = new Thread(Kaffe);
-            statusThread.Start();
         }
 
 
@@ -40,13 +33,10 @@ namespace MortenInTheMaking
 
         #region Methods
 
-        public void Kaffe()
-        {
-            
-        }
+        private static string HowToPlay() => "Left mouse click for avatar \n" +
+            "Right mouse click for workstation";
 
-
-        public string RessourceStatus()
+        private static string RessourceStatus()
         {
             int water = GameWorld.BrewingStation.Water;
             int milk = GameWorld.BrewingStation.Milk;
@@ -60,9 +50,11 @@ namespace MortenInTheMaking
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            
+            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
-            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 10), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1500, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            base.Draw(spriteBatch);
         }
 
         #endregion

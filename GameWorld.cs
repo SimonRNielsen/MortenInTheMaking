@@ -154,7 +154,7 @@ namespace MortenInTheMaking
             //Add lock here (Critical region) -> Mutex?
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
             //
-
+            
 
         }
 
