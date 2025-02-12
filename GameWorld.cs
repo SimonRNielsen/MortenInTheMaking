@@ -99,10 +99,6 @@ namespace MortenInTheMaking
             gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 505)));
             gameObjects.Add(new Worker(WorkerID.Rikke, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 670)));
 
-            drawThread = new Thread(RunDraw);
-            drawThread.IsBackground = true;
-            drawThread.Start();
-
             //Workstations:
             CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320));
             gameObjects.Add(CoffeeBeanStation);
@@ -124,6 +120,9 @@ namespace MortenInTheMaking
             gameObjects.Add(ComputerStation);
             ComputerStation.Start();
 
+            drawThread = new Thread(RunDraw);
+            drawThread.IsBackground = true;
+            drawThread.Start(); //SKAL startes som det sidste
 
         }
 
