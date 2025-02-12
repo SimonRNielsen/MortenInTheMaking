@@ -52,29 +52,23 @@ namespace MortenInTheMaking
         #endregion
         #region methods
 
-
-        ////public void StartThread()
-        ////{
-        ////    productivityThread.Start();
-        ////}
-
-
-        public void StopThread()
-        {
-            running = false;
-            ProductivityThread.Join(); //Behøves muligvis ikke
-        }
+        //Behøves muligvis ikke
+        //public void StopThread()
+        //{
+        //    running = false;
+        //    ProductivityThread.Join(); 
+        //}
 
         public void DrinkCoffee()
         {
-            productivity = Math.Min(maxProductivity, productivity + 20); //øger produktivitet
+            productivity = 20; //øger produktivitet
         }
 
         public void WorkAtComputer()
         {
             if (productivity > 0)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Money += 5;
                 productivity -= 1;
             }
@@ -86,10 +80,11 @@ namespace MortenInTheMaking
             {
                 if (productivity > 0)
                 {
+                    Thread.Sleep(2000);
                     productivity--; //dræner produktivitet hele tiden, langsomt over tid
                 }
 
-                productivity = MathHelper.Clamp(productivity, 0, maxProductivity);
+                //productivity = MathHelper.Clamp(productivity, 0, maxProductivity);
 
                 Thread.Sleep(1000);//Opdaterer hvert 1 sek
 
