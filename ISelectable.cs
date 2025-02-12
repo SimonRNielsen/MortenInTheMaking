@@ -19,20 +19,8 @@ namespace MortenInTheMaking
             }
             else if ((WorkstationType)workstation.Type == WorkstationType.Computer)
             {
-                switch ((WorkerID)worker.Type)
-                {
-                    case WorkerID.Irene:
-                        worker.Destination = new Vector2(GameWorld._graphics.PreferredBackBufferWidth / 2 - 150, 510))
-                        break;
-
-                    case WorkerID.Philip:
-                        break;
-                    case WorkerID.Rikke:
-                        break;
-                    case WorkerID.Simon:
-                        break;
-
-                }
+                worker.Destination = worker.SpawnPosition;
+            }
         }
     }
 }
