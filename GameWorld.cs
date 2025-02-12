@@ -47,7 +47,7 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-        public static bool GameRunning { get => gameRunning; } 
+        public static bool GameRunning { get => gameRunning; }
 
         #endregion
         #region Constructor
@@ -99,6 +99,9 @@ namespace MortenInTheMaking
             gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 505)));
             gameObjects.Add(new Worker(WorkerID.Rikke, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 670)));
 
+            drawThread = new Thread(RunDraw);
+            drawThread.IsBackground = true;
+            drawThread.Start();
 
             //Workstations:
             CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320));
@@ -120,6 +123,8 @@ namespace MortenInTheMaking
             ComputerStation = new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5));
             gameObjects.Add(ComputerStation);
             ComputerStation.Start();
+
+
         }
 
         protected override void LoadContent()
@@ -151,31 +156,13 @@ namespace MortenInTheMaking
                 gameObject.Update(gameTime);
             }
 
-            //Add lock here (Critical region) -> Mutex?
-            gameObjects.RemoveAll(obj => obj.IsAlive == false);
-            //
-            
-
         }
 
         protected override void Draw(GameTime gameTime)
         {
-
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
-
-            mousePointer.Draw(_spriteBatch);
-            try
-            {
-                foreach (GameObject gameObject in gameObjects)
-                {
-                    gameObject.Draw(_spriteBatch);
-                }
-            }
-            catch { }
-
-            _spriteBatch.End();
+            drawMutex.WaitOne();
             base.Draw(gameTime);
+            drawMutex.ReleaseMutex();
         }
 
         #region LoadAssets
@@ -242,6 +229,8 @@ namespace MortenInTheMaking
 
             while (gameRunning)
             {
+                drawMutex.WaitOne();
+                Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
@@ -256,6 +245,7 @@ namespace MortenInTheMaking
                 catch { }
 
                 _spriteBatch.End();
+                drawMutex.ReleaseMutex();
             }
 
         }
