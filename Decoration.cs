@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Input;
 
 namespace MortenInTheMaking
 {
     internal class Decoration : GameObject
     {
         #region Fields
-
+        private bool startBool = true;
 
 
         #endregion
@@ -49,10 +50,18 @@ namespace MortenInTheMaking
             else if (type is DecorationType.Morten)
             {
                 this.scale = 0.25f;
-                this.SpriteEffectIndex = 1; 
+                this.SpriteEffectIndex = 1;
             }
-
+            else if (type is DecorationType.Start)
+            {
+                this.layer = 1f;
+            }
+            else if (type is DecorationType.End)
+            {
+                this.layer = 1f;
+            }
         }
+
 
         #endregion
     }

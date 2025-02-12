@@ -15,7 +15,9 @@ namespace MortenInTheMaking
         Cursor,
         SelectionBox,
         Sign,
-        Morten
+        Morten,
+        Start,
+        End
     }
 
     public enum WorkerID

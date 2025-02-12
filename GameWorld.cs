@@ -29,6 +29,9 @@ namespace MortenInTheMaking
         internal static Workstation BrewingStation;
         internal static Workstation ComputerStation;
 
+
+        internal static Decoration startScreen;
+
         #region Assets
 
         public static Dictionary<Enum, Texture2D> sprites = new Dictionary<Enum, Texture2D>();
@@ -79,6 +82,9 @@ namespace MortenInTheMaking
             gameObjects.Add(new Ressource(RessourceType.Status, Vector2.Zero));
 
             #region decoration the office
+            startScreen = new Decoration(DecorationType.Start, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2));
+            gameObjects.Add(startScreen); ////////////////////////////////
+
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             //gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5))); Note form Philip: Moved it down with other workstations
             gameObjects.Add(new Decoration(DecorationType.Sign, new Vector2(960, 80)));
@@ -148,7 +154,12 @@ namespace MortenInTheMaking
                 Exit();
             }
 
-            base.Update(gameTime);
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                GameWorld.gameObjects.Remove(GameWorld.startScreen);
+            }
+
+            //base.Update(gameTime);
 
             foreach (GameObject gameObject in gameObjects)
             {
@@ -181,6 +192,7 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
             sprites.Add(DecorationType.Morten, Content.Load<Texture2D>("Sprites\\underCoverMortenSlingGul3"));
             sprites.Add(DecorationType.Sign, Content.Load<Texture2D>("Sprites\\sign"));
+            sprites.Add(DecorationType.Start, Content.Load<Texture2D>("Sprites\\loseScreen"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
