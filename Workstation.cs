@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace MortenInTheMaking
         private int water;
         private int milk;
         private int coffee = 1;
+        public static int Productivity;
+        private List<Worker> workersAtComputer = new List<Worker>();
 
 
         #endregion
@@ -40,9 +43,6 @@ namespace MortenInTheMaking
                     return new Rectangle();
             }
         }
-
-        #endregion
-        #region Constructor
         public int CoffeeBeans
         {
             get => coffeeBeans;
@@ -50,7 +50,7 @@ namespace MortenInTheMaking
             {
                 coffeeBeans = value;
                 if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
         public int Water
@@ -59,7 +59,7 @@ namespace MortenInTheMaking
             set
             {
                 water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
         public int Milk
@@ -68,11 +68,16 @@ namespace MortenInTheMaking
             set
             {
                 milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
-        public int Coffee { get => coffee; set => coffee = value; }
+        public int Coffee { get => coffee; set { coffee = value; } }
 
+        public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
+        internal List<Worker> WorkersAtComputer { get => workersAtComputer; set => workersAtComputer = value; }
+
+        #endregion
+        #region Constructor
 
 
         public Workstation(Enum type, Vector2 spawnPos) : base(type, spawnPos)
@@ -85,7 +90,6 @@ namespace MortenInTheMaking
             GameWorld.locations.Add(type, spawnPos);
         }
 
-        public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
         #endregion
         #region Methods
 
@@ -116,6 +120,7 @@ namespace MortenInTheMaking
                     AssignedWorker.Busy = false;
                     if (Coffee > 0)
                     {
+                        GameWorld.soundEffects["brewingSound"].Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
@@ -129,16 +134,23 @@ namespace MortenInTheMaking
                     AssignedWorker = null;
                     color = Color.White;
                 }
-                else if (assignedWorker != null
+                else if (workersAtComputer.LongCount() > 0
                     && (WorkstationType)type == WorkstationType.Computer
-                    && Vector2.Distance(AssignedWorker.SpawnPosition, AssignedWorker.Position) < 100)
+                    && Vector2.Distance(WorkersAtComputer[0].SpawnPosition, WorkersAtComputer[0].Position) < 10)
                 {
-                    AssignedWorker.Busy = false;
-                    if (GameWorld.Productivity > 0)
+                    foreach (Worker w in workersAtComputer)
                     {
+                        if (Vector2.Distance(w.SpawnPosition, w.Position) < 100)
+                        {
+                            w.Busy = false;
+                        }
+                    }
+                    if (Productivity > 0)
+                    {
+                        GameWorld.soundEffects["typingSound"].Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
-                        if (AssignedWorker != null)
+                        foreach (Worker w in WorkersAtComputer)
                         {
                             GameWorld.Productivity--;
                             GameWorld.Money += 10;
@@ -162,9 +174,6 @@ namespace MortenInTheMaking
         {
             internalWorkstationThread.Start();
         }
-
-
-        public int Kaffe() => CoffeeBeans;
 
 
         #endregion
