@@ -31,7 +31,7 @@ namespace MortenInTheMaking
 
         private static int money;
         private static int productivity = 3; //Start productivity
-        private static int winCondition = 1000000; ///Win conditions amount
+        private static int winCondition = 3000; ///Win conditions amount
 
         internal static Decoration startScreen;
         internal static SoundEffectInstance brewingSoundEffectInstance;
