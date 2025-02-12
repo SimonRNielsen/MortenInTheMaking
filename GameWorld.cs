@@ -89,13 +89,10 @@ namespace MortenInTheMaking
 
             #endregion
             #region overlay
-            gameObjects.Add(new ProgressBar(OverlayGraphics.MoneySquare, new Vector2(1300, 950)));
-            gameObjects.Add(new ProgressBar(OverlayGraphics.BarHollow, new Vector2(800, 1000)));
-            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(300, 980)));
-            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(300, 980)));
-
-            gameObjects.Add(new ProgressBar(OverlayGraphics.Lightning, new Vector2(280, 950)));
-            gameObjects.Add(new ProgressBar(OverlayGraphics.Lightning, new Vector2(280, 1050)));
+            gameObjects.Add(new ProgressBar(OverlayGraphics.MoneySquare, new Vector2(1480, 1000)));
+            gameObjects.Add(new ProgressBar(OverlayGraphics.BarHollow, new Vector2(780, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(294, 983)));
+            gameObjects.Add(new ProgressBar(OverlayGraphics.Lightning, new Vector2(250, 1000)));
             #endregion
 
             //Worker

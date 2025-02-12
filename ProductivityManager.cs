@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MortenInTheMaking
 {
-    internal class ProductivityManager : Overlay
+    internal class ProductivityManager : GameObject
     {
         #region fields
         private int productivity = 50; //produktivitet starter på 50%
@@ -40,7 +40,7 @@ namespace MortenInTheMaking
         /// <param name="test"></param>
         public ProductivityManager(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
-            this.layer = 0.99f;
+            this.layer = 0.98f;
             this.sprite = GameWorld.sprites[type];
 
             ProductivityThread = new Thread(UpdateProductivity);
@@ -110,7 +110,7 @@ namespace MortenInTheMaking
 
                 // Tegn kun den del af baren, der er fyldt
                 Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, sprite.Height);
-                spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White);
+                spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, layer);
             }
             else
             {
