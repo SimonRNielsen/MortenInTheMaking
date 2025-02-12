@@ -209,8 +209,9 @@ namespace MortenInTheMaking
 
         private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)
         {
-            const string brewingSound = "Sounds\\sound-of-coffee-maker-brewing-a-fresh-pot-hd-263171-[AudioTrimmer.com]";
-            soundEffects.Add("brewingMusic", Content.Load<SoundEffect>(brewingSound));
+            soundEffects.Add("brewingSound", Content.Load<SoundEffect>("Sounds\\sound-of-coffee-maker-brewing-a-fresh-pot-hd-263171-[AudioTrimmer.com]"));
+            soundEffects.Add("typingSound", Content.Load<SoundEffect>("Sounds\\typing-keyboard-sound-254462-[AudioTrimmer.com]"));
+
         }
 
         private void LoadMusic(ContentManager content, Dictionary<string, Song> songs)

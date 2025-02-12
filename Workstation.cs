@@ -120,7 +120,7 @@ namespace MortenInTheMaking
                     AssignedWorker.Busy = false;
                     if (Coffee > 0)
                     {
-                        GameWorld.soundEffects["brewingMusic"].Play();
+                        GameWorld.soundEffects["brewingSound"].Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
@@ -147,6 +147,7 @@ namespace MortenInTheMaking
                     }
                     if (Productivity > 0)
                     {
+                        GameWorld.soundEffects["typingSound"].Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         foreach (Worker w in WorkersAtComputer)
