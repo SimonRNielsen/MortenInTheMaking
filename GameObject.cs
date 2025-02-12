@@ -31,7 +31,7 @@ namespace MortenInTheMaking
         #endregion
 
         #region Properties
-        public Rectangle CollisionBox
+        public virtual Rectangle CollisionBox
         {
             get
             {
