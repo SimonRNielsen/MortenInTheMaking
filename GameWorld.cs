@@ -47,7 +47,7 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-        public static bool GameRunning { get => gameRunning; } 
+        public static bool GameRunning { get => gameRunning; }
 
         #endregion
         #region Constructor
@@ -154,13 +154,6 @@ namespace MortenInTheMaking
             {
                 gameObject.Update(gameTime);
             }
-
-            //Add lock here (Critical region) -> Mutex?
-            drawMutex.WaitOne();
-            gameObjects.RemoveAll(obj => obj.IsAlive == false);
-            drawMutex.ReleaseMutex();
-            //
-
 
         }
 

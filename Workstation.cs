@@ -30,7 +30,18 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-
+        public override Rectangle CollisionBox
+        {
+            get
+            {
+                if (sprite != null && (WorkstationType)type == WorkstationType.Computer)
+                    return new Rectangle((int)(Position.X - (sprite.Width / 2) * scale), (int)(Position.Y - (sprite.Height / 2) * scale), (int)(sprite.Width * scale), (int)(sprite.Height * scale));
+                else if (sprite != null)
+                    return new Rectangle((int)(Position.X - ((sprite.Width / 2) * scale) * 2), (int)(Position.Y - ((sprite.Height / 2) * scale) * 2), (int)(sprite.Width * scale) * 2, (int)(sprite.Height * scale) * 2);
+                else
+                    return new Rectangle();
+            }
+        }
 
         #endregion
         #region Constructor
