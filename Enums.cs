@@ -16,8 +16,7 @@ namespace MortenInTheMaking
         SelectionBox,
         Sign,
         Morten, 
-        BarBlack
-        Morten,
+        BarBlack,
         Start,
         End
     }

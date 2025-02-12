@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using SharpDX.Direct2D1.Effects;
 using System;
@@ -26,7 +27,7 @@ namespace MortenInTheMaking
         private int coffee = 1;
         public static int Productivity;
         private List<Worker> workersAtComputer = new List<Worker>();
-
+        private int moneyMaking = 1000; //How much money the worker is making 
 
         #endregion
         #region Properties
@@ -120,7 +121,7 @@ namespace MortenInTheMaking
                     AssignedWorker.Busy = false;
                     if (Coffee > 0)
                     {
-                        GameWorld.soundEffects["brewingSound"].Play();
+                        GameWorld.brewingSoundEffectInstance.Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
@@ -147,13 +148,13 @@ namespace MortenInTheMaking
                     }
                     if (GameWorld.Productivity > 0)
                     {
-                        GameWorld.soundEffects["typingSound"].Play();
+                        GameWorld.typpingSoundEffectInstance.Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         foreach (Worker w in WorkersAtComputer)
                         {
                             GameWorld.Productivity--;
-                            GameWorld.Money += 10;
+                            GameWorld.Money += moneyMaking;
                         }
                     }
                     else
