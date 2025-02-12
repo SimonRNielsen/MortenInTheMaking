@@ -18,7 +18,7 @@ namespace MortenInTheMaking
                     workstation.AssignedWorker.Busy = false;
                 workstation.AssignedWorker = worker;
                 worker.Busy = true;
-                worker.Destination = GameWorld.locations[workstation.Type];
+                worker.Destination = worker.SpawnPosition;
             }
             else if (workstation.AssignedWorker == null)
             {
@@ -27,16 +27,6 @@ namespace MortenInTheMaking
                 worker.Destination = GameWorld.locations[workstation.Type];
             }
             
-        }
-            workstation.AssignedWorker = worker;
-            if ((WorkstationType)workstation.Type != WorkstationType.Computer)
-            {
-                worker.Destination = GameWorld.locations[workstation.Type];
-            }
-            else if ((WorkstationType)workstation.Type == WorkstationType.Computer)
-            {
-                worker.Destination = worker.SpawnPosition;
-            }
         }
     }
 }
