@@ -139,7 +139,6 @@ namespace MortenInTheMaking
                     if (gameObject is ISelectable && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy && gameObject is Workstation)
                     {
                         (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
-                        (tempObject as Worker).Busy = true;
                         break;
                     }
                 }
