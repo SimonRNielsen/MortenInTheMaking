@@ -13,7 +13,6 @@ namespace MortenInTheMaking
     {
         /* TODO:
          * Add documentation
-         * Make specific destination for computerstation, denpendent on WorkerType
          * Use some sort of synchronisation such as lock or semafor, to make sure only one worker can ve at a workstation at a time (other than computer)
          * 
          * */
@@ -30,7 +29,18 @@ namespace MortenInTheMaking
         #endregion
         #region Properties
 
-
+        public override Rectangle CollisionBox
+        {
+            get
+            {
+                if (sprite != null && (WorkstationType)type == WorkstationType.Computer)
+                    return new Rectangle((int)(Position.X - (sprite.Width / 2) * scale), (int)(Position.Y - (sprite.Height / 2) * scale), (int)(sprite.Width * scale), (int)(sprite.Height * scale));
+                else if (sprite != null)
+                    return new Rectangle((int)(Position.X - ((sprite.Width / 2) * scale) * 2), (int)(Position.Y - ((sprite.Height / 2) * scale) * 2), (int)(sprite.Width * scale) * 2, (int)(sprite.Height * scale) * 2);
+                else
+                    return new Rectangle();
+            }
+        }
 
         #endregion
         #region Constructor
@@ -122,7 +132,7 @@ namespace MortenInTheMaking
                 }
                 else if (assignedWorker != null
                     && (WorkstationType)type == WorkstationType.Computer
-                    && Vector2.Distance(Position, AssignedWorker.Position) < 100)
+                    && Vector2.Distance(AssignedWorker.SpawnPosition, AssignedWorker.Position) < 100)
                 {
                     AssignedWorker.Busy = false;
                     if (Productivity > 0)
@@ -153,6 +163,9 @@ namespace MortenInTheMaking
         {
             internalWorkstationThread.Start();
         }
+
+
+        public int Kaffe() => CoffeeBeans;
 
 
         #endregion

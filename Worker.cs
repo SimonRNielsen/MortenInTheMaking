@@ -14,6 +14,7 @@ namespace MortenInTheMaking
         private bool busy;
         private Vector2 destination;
         private Vector2 velocity;
+        private Vector2 spawnPosition;
 
 
         #endregion
@@ -21,6 +22,7 @@ namespace MortenInTheMaking
 
         public bool Busy { get => busy; set => busy = value; }
         public Vector2 Destination { get => destination; set => destination = value; }
+        public Vector2 SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
 
 
         #endregion
@@ -29,10 +31,22 @@ namespace MortenInTheMaking
         public Worker(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
             Type = type;
+            spawnPosition = spawnPos;
             position = spawnPos;
             this.sprite = GameWorld.sprites[type];
             this.layer = 0.98f;
             this.Destination = position;
+            switch ((WorkerID)type)
+            {
+                case WorkerID.Philip:
+                case WorkerID.Simon:
+                    spriteEffectIndex = 0;
+                    break;
+                case WorkerID.Irene:
+                case WorkerID.Rikke:
+                    spriteEffectIndex = 1;
+                    break;
+            }
         }
 
         #endregion
@@ -40,7 +54,7 @@ namespace MortenInTheMaking
 
         public override void Update(GameTime gameTime)
         {
-            if (Vector2.Distance(Position, this.Destination) > 100)
+            if ((Vector2.Distance(Position, this.Destination) > 100 ) || (Vector2.Distance(Position, this.Destination) > 0 && this.Destination == spawnPosition))
             {
                 MoveToDestination(gameTime);
             }
@@ -68,7 +82,30 @@ namespace MortenInTheMaking
                 { speed = 200; }
             position += ( speed * velocity * deltaTime);
 
+            switch (velocity.X)
+            {
+                case < 0:
+                    spriteEffectIndex = 0;
+                    break;
+                case > 0:
+                    spriteEffectIndex = 1;
+                    break;
+            }
+
             velocity = Vector2.Zero;
+
+            if (Vector2.Distance(position, spawnPosition) < 10)
+                switch ((WorkerID)type)
+                {
+                    case WorkerID.Philip:
+                    case WorkerID.Simon:
+                        spriteEffectIndex = 0;
+                        break;
+                    case WorkerID.Irene:
+                    case WorkerID.Rikke:
+                        spriteEffectIndex = 1;
+                        break;
+                }
         }
 
         public void DeliverResource(WorkstationType workstation)

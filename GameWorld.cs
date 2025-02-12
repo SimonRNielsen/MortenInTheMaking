@@ -35,7 +35,7 @@ namespace MortenInTheMaking
         public static Dictionary<Enum, Texture2D[]> animations = new Dictionary<Enum, Texture2D[]>();
         public static Dictionary<string, SoundEffect> soundEffects = new Dictionary<string, SoundEffect>();
         public static Dictionary<string, Song> music = new Dictionary<string, Song>();
-        public static SpriteFont gameFont;
+        public static SpriteFont ressourceFont;
 
         #endregion
         #region Threads
@@ -73,6 +73,7 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
 
 
+            gameObjects.Add(new Ressource(RessourceType.Status, Vector2.Zero));
 
             #region decoration the office
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
@@ -101,10 +102,6 @@ namespace MortenInTheMaking
             gameObjects.Add(new Worker(WorkerID.Philip, new Vector2(_graphics.PreferredBackBufferWidth / 2 + 150, 505)));
             gameObjects.Add(new Worker(WorkerID.Rikke, new Vector2(_graphics.PreferredBackBufferWidth / 2 - 150, 670)));
 
-            drawThread = new Thread(RunDraw);
-            drawThread.IsBackground = true;
-            drawThread.Start();
-
             //Workstations:
             CoffeeBeanStation = new Workstation(WorkstationType.CoffeeBeanStation, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, 320));
             gameObjects.Add(CoffeeBeanStation);
@@ -126,6 +123,9 @@ namespace MortenInTheMaking
             gameObjects.Add(ComputerStation);
             ComputerStation.Start();
 
+            drawThread = new Thread(RunDraw);
+            drawThread.IsBackground = true;
+            drawThread.Start(); //SKAL startes som det sidste
 
         }
 
@@ -138,8 +138,8 @@ namespace MortenInTheMaking
             LoadAnimations(Content, animations);
             LoadSounds(Content, soundEffects);
             LoadMusic(Content, music);
-            gameFont = Content.Load<SpriteFont>("standardFont");
 
+            ressourceFont = Content.Load<SpriteFont>("standardFont");
         }
 
         protected override void Update(GameTime gameTime)
@@ -157,13 +157,6 @@ namespace MortenInTheMaking
             {
                 gameObject.Update(gameTime);
             }
-
-            //Add lock here (Critical region) -> Mutex?
-            //drawMutex.WaitOne();
-            gameObjects.RemoveAll(obj => obj.IsAlive == false);
-            //drawMutex.ReleaseMutex();
-            //
-
 
         }
 
@@ -243,15 +236,11 @@ namespace MortenInTheMaking
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 SpriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
-                mousePointer.Draw(SpriteBatch);
-                try
+                mousePointer.Draw(_spriteBatch);
+                foreach (GameObject gameObject in gameObjects)
                 {
-                    foreach (GameObject gameObject in gameObjects)
-                    {
-                        gameObject.Draw(SpriteBatch);
-                    }
+                    gameObject.Draw(_spriteBatch);
                 }
-                catch { }
 
                 SpriteBatch.End();
                 drawMutex.ReleaseMutex();
