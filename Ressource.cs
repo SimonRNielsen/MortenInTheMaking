@@ -51,7 +51,8 @@ namespace MortenInTheMaking
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
+            spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1480 - (GameWorld.Money.ToString().Length * +5), 980), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
             spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
             spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1500, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);

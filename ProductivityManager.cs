@@ -16,14 +16,12 @@ namespace MortenInTheMaking
     internal class ProductivityManager : GameObject
     {
         #region fields
-        public static int productivity = 50; //produktivitet starter på 50%
         private int maxProductivity = 100;
-        private readonly object productivityLock = new object();
 
-        public static int Money { get; private set; } = 0; //Start sum
 
         private bool running = true;
         private Thread ProductivityThread;
+        private int productivity;
 
         #endregion
         #region Properties
@@ -52,29 +50,12 @@ namespace MortenInTheMaking
 
         #endregion
         #region methods
-
-        //Behøves muligvis ikke
-        //public void StopThread()
-        //{
-        //    running = false;
-        //    ProductivityThread.Join(); 
-        //}
-
         //public void DrinkCoffee()
         //{
         //    int coffee = GameWorld.BrewingStation.Coffee;
-
         //}
 
-        public void WorkAtComputer()
-        {
-            if (productivity > 0)
-            {
-                Thread.Sleep(2000);
-                Money += 5;
-                productivity -= 1;
-            }
-        }
+       
 
 
 
@@ -82,11 +63,13 @@ namespace MortenInTheMaking
         {
             while (running)
             {
-                if (productivity > 0)
-                {
+                //if (productivity > 0)
+                //{
                     Thread.Sleep(2000);
-                    productivity--; //dræner produktivitet hele tiden, langsomt over tid
-                }
+                    //productivity--; //dræner produktivitet hele tiden, langsomt over tid
+                    productivity = GameWorld.Productivity;
+                //}
+
 
                 //productivity = MathHelper.Clamp(productivity, 0, maxProductivity);
                 Thread.Sleep(1000);//Opdaterer hvert 1 sek
@@ -99,10 +82,9 @@ namespace MortenInTheMaking
 
             if (running)
             {
-                productivity = GameWorld.BrewingStation.Coffee;
 
                 // Udregn skaleret bredde korrekt
-                float scaleX = (float)productivity / maxProductivity;
+                float scaleX = (float)GameWorld.Productivity / maxProductivity;
                 int scaledWidth = (int)MathF.Round(sprite.Width * scaleX);
 
                 // Sørg for, at vi ikke tegner en negativ bredde
@@ -112,13 +94,13 @@ namespace MortenInTheMaking
                 Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, sprite.Height);
                 spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, layer);
             }
-            else
-            {
+            //else
+            //{
 
-                // Tegn den normale, ikke-fyldte bar
-                spriteBatch.Draw(GameWorld.sprites[type], position, Color.White);
+            //    // Tegn den normale, ikke-fyldte bar
+            //    spriteBatch.Draw(GameWorld.sprites[type], position, Color.White);
 
-            }
+            //}
         }
 
         #endregion

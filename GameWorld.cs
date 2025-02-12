@@ -28,6 +28,10 @@ namespace MortenInTheMaking
         internal static Workstation WaterStation;
         internal static Workstation BrewingStation;
         internal static Workstation ComputerStation;
+        private static int money;
+
+        private static int productivity = 42;
+
 
         #region Assets
 
@@ -49,6 +53,9 @@ namespace MortenInTheMaking
 
         public static bool GameRunning { get => gameRunning; }
         public SpriteBatch SpriteBatch { get => _spriteBatch; set => _spriteBatch = value; }
+        public static int Productivity { get => productivity; set => productivity = value; }
+
+        public static int Money { get => money; set => money = value; }
 
         #endregion
         #region Constructor
@@ -247,6 +254,7 @@ namespace MortenInTheMaking
             }
 
         }
+
 
         #endregion
     }

@@ -23,7 +23,6 @@ namespace MortenInTheMaking
         private int water;
         private int milk;
         private int coffee = 1;
-        public static int Productivity;
 
 
         #endregion
@@ -120,7 +119,7 @@ namespace MortenInTheMaking
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
-                        Productivity++;
+                        GameWorld.Productivity++;
                     }
                     else
                     {
@@ -135,14 +134,14 @@ namespace MortenInTheMaking
                     && Vector2.Distance(AssignedWorker.SpawnPosition, AssignedWorker.Position) < 100)
                 {
                     AssignedWorker.Busy = false;
-                    if (Productivity > 0)
+                    if (GameWorld.Productivity > 0)
                     {
                         color = Color.Green;
                         Thread.Sleep(2000);
                         if (AssignedWorker != null)
                         {
-                            Productivity--;
-                            //Penge ++
+                            GameWorld.Productivity--;
+                            GameWorld.Money += 10;
                         }
                     }
                     else

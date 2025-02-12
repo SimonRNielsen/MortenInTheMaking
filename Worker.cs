@@ -15,6 +15,7 @@ namespace MortenInTheMaking
         private Vector2 destination;
         private Vector2 velocity;
         private Vector2 spawnPosition;
+        private int hasCoffee = 10;
 
 
         #endregion
@@ -23,7 +24,7 @@ namespace MortenInTheMaking
         public bool Busy { get => busy; set => busy = value; }
         public Vector2 Destination { get => destination; set => destination = value; }
         public Vector2 SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
-
+        public int HasCoffee { get => hasCoffee; set => hasCoffee = value; }
 
         #endregion
         #region Constructor
