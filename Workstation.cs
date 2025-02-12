@@ -50,7 +50,7 @@ namespace MortenInTheMaking
             {
                 coffeeBeans = value;
                 if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
         public int Water
@@ -59,7 +59,7 @@ namespace MortenInTheMaking
             set
             {
                 water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
         public int Milk
@@ -68,10 +68,10 @@ namespace MortenInTheMaking
             set
             {
                 milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; }
+                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
             }
         }
-        public int Coffee { get => coffee; set { coffee = value; if (value > 0) { this.Milk--; this.Water--; this.CoffeeBeans--; } } }
+        public int Coffee { get => coffee; set { coffee = value; } }
 
         public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
         internal List<Worker> WorkersAtComputer { get => workersAtComputer; set => workersAtComputer = value; }
