@@ -13,7 +13,6 @@ namespace MortenInTheMaking
     {
         /* TODO:
          * Add documentation
-         * Make specific destination for computerstation, denpendent on WorkerType
          * Use some sort of synchronisation such as lock or semafor, to make sure only one worker can ve at a workstation at a time (other than computer)
          * 
          * */
@@ -133,7 +132,7 @@ namespace MortenInTheMaking
                 }
                 else if (assignedWorker != null
                     && (WorkstationType)type == WorkstationType.Computer
-                    && Vector2.Distance(Position, AssignedWorker.Position) < 100)
+                    && Vector2.Distance(AssignedWorker.SpawnPosition, AssignedWorker.Position) < 100)
                 {
                     AssignedWorker.Busy = false;
                     if (Productivity > 0)
