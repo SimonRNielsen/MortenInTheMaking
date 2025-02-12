@@ -36,6 +36,17 @@ namespace MortenInTheMaking
             this.sprite = GameWorld.sprites[type];
             this.layer = 0.98f;
             this.Destination = position;
+            switch ((WorkerID)type)
+            {
+                case WorkerID.Philip:
+                case WorkerID.Simon:
+                    spriteEffectIndex = 0;
+                    break;
+                case WorkerID.Irene:
+                case WorkerID.Rikke:
+                    spriteEffectIndex = 1;
+                    break;
+            }
         }
 
         #endregion
@@ -71,7 +82,30 @@ namespace MortenInTheMaking
                 { speed = 200; }
             position += ( speed * velocity * deltaTime);
 
+            switch (velocity.X)
+            {
+                case < 0:
+                    spriteEffectIndex = 0;
+                    break;
+                case > 0:
+                    spriteEffectIndex = 1;
+                    break;
+            }
+
             velocity = Vector2.Zero;
+
+            if (Vector2.Distance(position, spawnPosition) < 10)
+                switch ((WorkerID)type)
+                {
+                    case WorkerID.Philip:
+                    case WorkerID.Simon:
+                        spriteEffectIndex = 0;
+                        break;
+                    case WorkerID.Irene:
+                    case WorkerID.Rikke:
+                        spriteEffectIndex = 1;
+                        break;
+                }
         }
 
         public void DeliverResource(WorkstationType workstation)

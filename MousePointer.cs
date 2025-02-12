@@ -68,11 +68,7 @@ namespace MortenInTheMaking
         public MousePointer(Enum type)
         {
 
-            try
-            {
-                sprite = GameWorld.sprites[type];
-            }
-            catch { }
+            sprite = GameWorld.sprites[type];
             inputThread = new Thread(HandleInput);
             inputThread.IsBackground = true;
             inputThread.Start();
@@ -136,7 +132,7 @@ namespace MortenInTheMaking
             if (tempObject != null && !ranRightClick && tempObject is Worker)
                 foreach (GameObject gameObject in GameWorld.gameObjects)
                 {
-                    if (gameObject is ISelectable && gameObject.CollisionBox.Intersects(CollisionBox) && !(tempObject as Worker).Busy && gameObject is Workstation)
+                    if (!(tempObject as Worker).Busy && gameObject is Workstation && gameObject.CollisionBox.Intersects(CollisionBox))
                     {
                         (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
                         break;
