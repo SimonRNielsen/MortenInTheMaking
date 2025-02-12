@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace MortenInTheMaking
         private Vector2 velocity;
         private Vector2 spawnPosition;
         private int hasCoffee = 10;
-
+        private RessourceType carriedRessource;
+        private bool hasRessource = false;
 
         #endregion
         #region Properties
@@ -61,8 +63,27 @@ namespace MortenInTheMaking
             }
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            float displace = 0;
+            switch (spriteEffectIndex)
+            {
+                case 0:
+                    displace = -(sprite.Width / 2f);
+                    break;
+                case 1:
+                    displace = sprite.Width / 2f;
+                    break;
+            }
+            if (hasRessource)
+                spriteBatch.Draw(GameWorld.sprites[carriedRessource], new Vector2(position.X + displace, position.Y), null, color, 0f, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[0], layer);
+        }
+
         public void MoveToDestination(GameTime gameTime)
         {
+            if (Destination == GameWorld.locations[WorkstationType.BrewingStation] && Vector2.Distance(destination, position) < 105)
+                hasRessource = false;
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -117,14 +138,20 @@ namespace MortenInTheMaking
             {
                 case WorkstationType.CoffeeBeanStation:
                     GameWorld.BrewingStation.CoffeeBeans++;
+                    carriedRessource = RessourceType.CoffeeBeans;
+                    hasRessource = true;
                     break;
                 case WorkstationType.WaterStation:
                     GameWorld.BrewingStation.Water++;
+                    carriedRessource = RessourceType.Water;
+                    hasRessource = true;
                     break;
                 case WorkstationType.MilkStation:
+                    carriedRessource = RessourceType.Milk;
+                    hasRessource = true;
                     GameWorld.BrewingStation.Milk++;
                     break;
-           }
+            }
 
             
         }

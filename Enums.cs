@@ -29,10 +29,10 @@ namespace MortenInTheMaking
 
     public enum RessourceType
     {
-        //Coffee,
-        //Milk,
-        //Water,
-        //CoffeeBeans,
+        Coffee,
+        Milk,
+        Water,
+        CoffeeBeans,
         Money,
         Productivity,
         Status
