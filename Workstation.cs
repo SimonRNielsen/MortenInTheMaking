@@ -70,10 +70,10 @@ namespace MortenInTheMaking
             }
         }
         public int Coffee { get => coffee; set => coffee = value; }
+        public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
 
         #endregion
         #region Constructor
-
 
 
         public Workstation(Enum type, Vector2 spawnPos) : base(type, spawnPos)
@@ -86,7 +86,6 @@ namespace MortenInTheMaking
             GameWorld.locations.Add(type, spawnPos);
         }
 
-        public Worker AssignedWorker { get => assignedWorker; set => assignedWorker = value; }
         #endregion
         #region Methods
 
