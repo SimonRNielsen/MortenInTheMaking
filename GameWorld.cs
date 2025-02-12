@@ -188,11 +188,11 @@ namespace MortenInTheMaking
             sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\rikke"));
             sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
 
-            //RessourceType
-            sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
-            sprites.Add(RessourceType.Milk, Content.Load<Texture2D>("Sprites\\milk"));
-            sprites.Add(RessourceType.Water, Content.Load<Texture2D>("Sprites\\water"));
-            sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
+            ////RessourceType
+            //sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
+            //sprites.Add(RessourceType.Milk, Content.Load<Texture2D>("Sprites\\milk"));
+            //sprites.Add(RessourceType.Water, Content.Load<Texture2D>("Sprites\\water"));
+            //sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
 
             //WorkStation
             sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
@@ -209,6 +209,8 @@ namespace MortenInTheMaking
 
         private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)
         {
+            soundEffects.Add("brewingSound", Content.Load<SoundEffect>("Sounds\\sound-of-coffee-maker-brewing-a-fresh-pot-hd-263171-[AudioTrimmer.com]"));
+            soundEffects.Add("typingSound", Content.Load<SoundEffect>("Sounds\\typing-keyboard-sound-254462-[AudioTrimmer.com]"));
 
         }
 
