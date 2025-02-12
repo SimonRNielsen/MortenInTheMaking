@@ -145,7 +145,7 @@ namespace MortenInTheMaking
                             w.Busy = false;
                         }
                     }
-                    if (Productivity > 0)
+                    if (GameWorld.Productivity > 0)
                     {
                         GameWorld.soundEffects["typingSound"].Play();
                         color = Color.Green;
