@@ -18,7 +18,7 @@ namespace MortenInTheMaking
         Morten, 
         BarBlack,
         Start,
-        End
+        End,
         TextBox1,
         TextBox2
     }
