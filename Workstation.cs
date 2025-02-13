@@ -23,7 +23,7 @@ namespace MortenInTheMaking
         public static int Productivity;
         private List<Worker> workersAtComputer = new List<Worker>();
         private int moneyMaking = 1000; //How much money the worker is making 
-        
+
         #endregion
         #region Properties
 
@@ -158,8 +158,11 @@ namespace MortenInTheMaking
                         Thread.Sleep(2000);
                         foreach (Worker w in WorkersAtComputer)
                         {
-                            GameWorld.Productivity--;
-                            GameWorld.Money += moneyMaking;
+                            if (GameWorld.Productivity > 0)
+                            {
+                                GameWorld.Productivity--;
+                                GameWorld.Money += moneyMaking;
+                            }
                         }
                     }
                     else
