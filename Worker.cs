@@ -73,7 +73,7 @@ namespace MortenInTheMaking
                     break;
             }
             if (hasRessource)
-                spriteBatch.Draw(GameWorld.sprites[carriedRessource], new Vector2(position.X + displace, position.Y), null, color, 0f, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, spriteEffects[0], layer);
+                spriteBatch.Draw(GameWorld.sprites[carriedRessource], new Vector2(position.X + displace, position.Y), null, color, 0f, new Vector2(sprite.Width / 2, sprite.Height / 2), 0.6f, spriteEffects[0], layer);
         }
 
         public void MoveToDestination(GameTime gameTime)

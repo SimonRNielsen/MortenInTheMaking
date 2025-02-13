@@ -47,6 +47,7 @@ namespace MortenInTheMaking
 
         private Thread drawThread;
         private Mutex drawMutex = new Mutex();
+        public static readonly object ResourceLock = new object();
 
         #endregion
         #endregion
