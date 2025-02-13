@@ -253,12 +253,12 @@ namespace MortenInTheMaking
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
         {
-            Texture2D[] rikke = new Texture2D[5];
-            for (int i = 0; i < 5; i++)
-            {
-                rikke[i] = Content.Load<Texture2D>("Sprites\\Animation\\rikke" + i);
-            }
-            animations.Add(WorkerID.Rikke, rikke);
+            //Texture2D[] rikke = new Texture2D[5];
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    rikke[i] = Content.Load<Texture2D>("Sprites\\Animation\\rikke" + i);
+            //}
+            //animations.Add(WorkerID.Rikke, rikke);
         }
 
         private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)
