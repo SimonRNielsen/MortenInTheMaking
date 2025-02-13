@@ -113,6 +113,10 @@ namespace MortenInTheMaking
                         else
                             tempObject = null;
                     }
+                    else if (gameObject is Decoration && (DecorationType)gameObject.Type == DecorationType.Morten && gameObject.CollisionBox.Intersects(CollisionBox))
+                    {
+                        GameWorld.Productivity += 20;
+                    }
                 }
             ranLeftClick = true;
         }
@@ -142,10 +146,12 @@ namespace MortenInTheMaking
 
             while (GameWorld.GameRunning)
             {
+
                 var mouseState = Mouse.GetState();
                 position = mouseState.Position.ToVector2();
                 LeftClick = mouseState.LeftButton == ButtonState.Pressed;
                 RightClick = mouseState.RightButton == ButtonState.Pressed;
+
             }
 
         }

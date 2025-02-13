@@ -25,10 +25,10 @@ namespace MortenInTheMaking
         internal static Workstation WaterStation;
         internal static Workstation BrewingStation;
         internal static Workstation ComputerStation;
-
+        private bool won = false;
         private static int money;
         private static int productivity = 3; //Start productivity
-        private static int winCondition = 1000000; ///Win conditions amount
+        private static int winCondition = 50000; ///Win conditions amount
 
         internal static Decoration startScreen;
         internal static SoundEffectInstance brewingSoundEffectInstance;
@@ -67,6 +67,7 @@ namespace MortenInTheMaking
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
+            
         }
 
         #endregion
@@ -144,9 +145,6 @@ namespace MortenInTheMaking
             brewingSoundEffectInstance = GameWorld.soundEffects["brewingSound"].CreateInstance();
             typpingSoundEffectInstance = GameWorld.soundEffects["typingSound"].CreateInstance();
 
-
-
-
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start(); //SKAL startes som det sidste
@@ -168,38 +166,46 @@ namespace MortenInTheMaking
 
         protected override void Update(GameTime gameTime)
         {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Update(gameTime);
+            }
+            if (gameObjects.Contains(startScreen) && Keyboard.GetState().IsKeyDown(Keys.Enter)) //Starting the game
+            {
+                drawMutex.WaitOne();
+                //Removing the start screen from gameObjects
+                gameObjects.Remove(startScreen);
+                drawMutex.ReleaseMutex();
+            }
+            if (money >= 50000 && !won)
+                Thread.Sleep(1500);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 gameRunning = false;
                 Thread.Sleep(30);
                 Exit();
             }
-            else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter)) //Starting the game
-            {
-                //Removing the start screen from gameObjects
-                GameWorld.gameObjects.Remove(GameWorld.startScreen);
-            }
-            else if (money > winCondition) //Win conditions
+            else if (money >= winCondition && !won) //Win conditions
             {
                 //Clearing gameObjects
                 drawMutex.WaitOne();
                 GameWorld.gameObjects.Clear();
+                //Adding the end screen to gameObjects
+                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
                 drawMutex.ReleaseMutex();
 
                 //Stopping the soundeffect instancs
+                won = true;
+
+            }
+            if (won)
+            {
                 brewingSoundEffectInstance.Stop();
                 typpingSoundEffectInstance.Stop();
-                
-                //Adding the end screen to gameObjects
-                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
-            }
 
+            }
             //base.Update(gameTime);
 
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gameObject.Update(gameTime);
-            }
 
         }
 
