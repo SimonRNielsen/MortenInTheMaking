@@ -8,12 +8,11 @@ namespace MortenInTheMaking
     internal class ProductivityManager : GameObject
     {
         #region fields
-        private int maxProductivity = 100;
+        private int maxProductivity = 40;
 
 
-        private bool running = true;
         private Thread ProductivityThread;
-        private int productivity;
+        //private int productivity;
 
         #endregion
         #region Properties
@@ -45,13 +44,13 @@ namespace MortenInTheMaking
        
         public void UpdateProductivity()
         {
-            while (running)
+            while (GameWorld.GameRunning)
             {
                 //if (productivity > 0)
                 //{
-                Thread.Sleep(2000);
+                    Thread.Sleep(2000);
+                //productivity = GameWorld.Productivity;
                 //productivity--; //dræner produktivitet hele tiden, langsomt over tid
-                productivity = GameWorld.Productivity;
                 //}
 
 
@@ -64,7 +63,7 @@ namespace MortenInTheMaking
         public override void Draw(SpriteBatch spriteBatch)
         {
 
-            if (running)
+            if (GameWorld.GameRunning)
             {
 
                 // Udregn skaleret bredde korrekt
@@ -78,7 +77,13 @@ namespace MortenInTheMaking
                 Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, sprite.Height);
                 spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, layer);
             }
-           
+            //else
+            //{
+
+            //    // Tegn den normale, ikke-fyldte bar
+            //    spriteBatch.Draw(GameWorld.sprites[type], position, Color.White);
+
+            //}
         }
 
         #endregion
