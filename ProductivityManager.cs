@@ -8,7 +8,7 @@ namespace MortenInTheMaking
     internal class ProductivityManager : GameObject
     {
         #region fields
-        private int maxProductivity = 100;
+        private int maxProductivity = 40;
 
 
         private Thread ProductivityThread;
