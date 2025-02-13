@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MortenInTheMaking
 {
@@ -57,7 +58,7 @@ namespace MortenInTheMaking
 
         public override void Update(GameTime gameTime)
         {
-            if ((Vector2.Distance(Position, this.Destination) > 100 ) || (Vector2.Distance(Position, this.Destination) > 0 && this.Destination == spawnPosition))
+            if ((Vector2.Distance(Position, this.Destination) > 100) || (Vector2.Distance(Position, this.Destination) > 0 && this.Destination == spawnPosition))
             {
                 MoveToDestination(gameTime);
             }
@@ -83,26 +84,30 @@ namespace MortenInTheMaking
         public void MoveToDestination(GameTime gameTime)
         {
             if (Destination == GameWorld.locations[WorkstationType.BrewingStation] && Vector2.Distance(destination, position) < 105)
+            {
+                if (GameWorld.BrewingStation.AssignedWorker != this)
+                    busy = false;
                 hasRessource = false;
+            }
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Position.X+5 < this.Destination.X)
+            if (Position.X + 5 < this.Destination.X)
                 velocity += new Vector2(1, 0);
-            else if (Position.X-5 > this.Destination.X)
+            else if (Position.X - 5 > this.Destination.X)
                 velocity -= new Vector2(1, 0);
 
-            if (Position.Y+5 < this.Destination.Y)
+            if (Position.Y + 5 < this.Destination.Y)
                 velocity += new Vector2(0, 1);
-            else if (Position.Y-5 > this.Destination.Y)
+            else if (Position.Y - 5 > this.Destination.Y)
                 velocity -= new Vector2(0, 1);
 
             //Speed for worker walkin vertically or horizontally
             int speed = 300;
             //Speed for worker walking diagonally
-            if((velocity.Y != 0) && (velocity.X != 0))
-                { speed = 200; }
-            position += ( speed * velocity * deltaTime);
+            if ((velocity.Y != 0) && (velocity.X != 0))
+            { speed = 200; }
+            position += (speed * velocity * deltaTime);
 
             switch (velocity.X)
             {
@@ -133,7 +138,7 @@ namespace MortenInTheMaking
         public void DeliverResource(WorkstationType workstation)
         {
             this.Destination = GameWorld.locations[WorkstationType.BrewingStation];
-            this.Busy = false;
+            //this.Busy = false;
             switch (workstation)
             {
                 case WorkstationType.CoffeeBeanStation:
@@ -153,7 +158,7 @@ namespace MortenInTheMaking
                     break;
             }
 
-            
+
         }
 
         #endregion
