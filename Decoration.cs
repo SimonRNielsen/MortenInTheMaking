@@ -49,7 +49,7 @@ namespace MortenInTheMaking
                 this.scale = 2f;
                 this.SpriteEffectIndex = 1;
             }
-            else if (type is DecorationType.Start)
+            else if (type is DecorationType.Start || type is DecorationType.End)
             {
                 this.layer = 1f;
             }

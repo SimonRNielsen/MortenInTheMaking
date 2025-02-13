@@ -27,7 +27,7 @@ namespace MortenInTheMaking
         internal static Workstation ComputerStation;
         private bool won = false;
         private static int money;
-        private static int productivity = 3; //Start productivity
+        private static int productivity = 4; //Start productivity
         private static int winCondition = 50000; ///Win conditions amount
 
         internal static Decoration startScreen;
@@ -67,7 +67,6 @@ namespace MortenInTheMaking
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
-            
         }
 
         #endregion
@@ -202,7 +201,9 @@ namespace MortenInTheMaking
             {
                 brewingSoundEffectInstance.Stop();
                 typpingSoundEffectInstance.Stop();
-
+                
+                //Adding the end screen to gameObjects
+                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             }
             //base.Update(gameTime);
 

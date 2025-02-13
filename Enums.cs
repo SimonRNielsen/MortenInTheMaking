@@ -47,10 +47,10 @@
     }
 
     public enum OverlayGraphics
-    { 
+    {
         BarHollow,
-        BarFill,
-        Lightning, 
+        //BarFill,
+        Lightning,
         MoneySquare
     }
 
