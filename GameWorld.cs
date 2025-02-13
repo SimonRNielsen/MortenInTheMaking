@@ -55,7 +55,16 @@ namespace MortenInTheMaking
 
         public static bool GameRunning { get => gameRunning; }
 
-        public static int Productivity { get => productivity; set => productivity = value; }
+        public static int Productivity
+        {
+            get => productivity;
+            set
+            {
+                if (value > 40)
+                    value = 40;
+                productivity = value;
+            }
+        }
 
         public static int Money { get => money; set => money = value; }
 
