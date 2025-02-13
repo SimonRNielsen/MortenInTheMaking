@@ -234,7 +234,7 @@ namespace MortenInTheMaking
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
             sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\philip"));
-            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\rikke"));
+            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\Animation\\rikke"));
             sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
 
             ////RessourceType
@@ -253,7 +253,12 @@ namespace MortenInTheMaking
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
         {
-
+            Texture2D[] rikke = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                rikke[i] = Content.Load<Texture2D>("Sprites\\Animation\\rikke" + i);
+            }
+            animations.Add(WorkerID.Rikke, rikke);
         }
 
         private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)
