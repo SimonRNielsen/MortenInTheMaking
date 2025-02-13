@@ -11,7 +11,6 @@ namespace MortenInTheMaking
         private int maxProductivity = 100;
 
 
-        private bool running = true;
         private Thread ProductivityThread;
         private int productivity;
 
@@ -53,7 +52,7 @@ namespace MortenInTheMaking
 
         public void UpdateProductivity()
         {
-            while (running)
+            while (GameWorld.GameRunning)
             {
                 //if (productivity > 0)
                 //{
@@ -72,7 +71,7 @@ namespace MortenInTheMaking
         public override void Draw(SpriteBatch spriteBatch)
         {
 
-            if (running)
+            if (GameWorld.GameRunning)
             {
 
                 // Udregn skaleret bredde korrekt
