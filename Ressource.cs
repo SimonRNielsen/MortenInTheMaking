@@ -31,12 +31,9 @@ namespace MortenInTheMaking
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Player guide
-        /// </summary>
-        /// <returns>String with how to information to play the game</returns>
-        private static string HowToPlay() => "Left mouse click for avatar \n" +
-            "Right mouse click for workstation";
+
+        private static string HowToPlay() => "\nSelect worker: \nLeft mouse click\n" +
+            "Assign to workstation: \nRight mouse click";
 
         /// <summary>
         /// Ressource Status
@@ -49,7 +46,7 @@ namespace MortenInTheMaking
             int coffebean = GameWorld.BrewingStation.CoffeeBeans;
             int coffee = GameWorld.BrewingStation.Coffee;
             return 
-                $"Coffee bean: {coffebean} \n" +
+                $"\nCoffee bean: {coffebean} \n" +
                 $"Milk: {milk} \n" +
                 $"Water : {water} \n" +
                 $"Coffee: {coffee}";
@@ -61,11 +58,12 @@ namespace MortenInTheMaking
         /// <param name="spriteBatch">Spritebatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1480 - (GameWorld.Money.ToString().Length * +5), 980), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.3f);
-            
-            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.3f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1403, 980), Color.White, 0f, Vector2.Zero, 1.4f, SpriteEffects.None, 1f);
 
-            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1500, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.3f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(60, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
+            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1660, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            base.Draw(spriteBatch);
         }
 
         #endregion

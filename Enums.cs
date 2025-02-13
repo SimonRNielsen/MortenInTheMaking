@@ -19,6 +19,8 @@ namespace MortenInTheMaking
         BarBlack,
         Start,
         End
+        TextBox1,
+        TextBox2
     }
 
     public enum WorkerID
@@ -31,10 +33,10 @@ namespace MortenInTheMaking
 
     public enum RessourceType
     {
-        //Coffee,
-        //Milk,
-        //Water,
-        //CoffeeBeans,
+        Coffee,
+        Milk,
+        Water,
+        CoffeeBeans,
         Money,
         Productivity,
         Status

@@ -129,10 +129,10 @@ namespace MortenInTheMaking
         /// </summary>
         private void RightClickEvent()
         {
-            if (tempObject != null && !ranRightClick && tempObject is Worker)
+            if (tempObject != null && !ranRightClick && tempObject is Worker && !(tempObject as Worker).Busy)
                 foreach (GameObject gameObject in GameWorld.gameObjects)
                 {
-                    if (!(tempObject as Worker).Busy && gameObject is Workstation && gameObject.CollisionBox.Intersects(CollisionBox))
+                    if (gameObject is Workstation && gameObject.CollisionBox.Intersects(CollisionBox))
                     {
                         (gameObject as ISelectable).AssignToWorkstation(tempObject as Worker, gameObject as Workstation);
                         break;
