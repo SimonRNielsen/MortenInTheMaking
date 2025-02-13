@@ -233,10 +233,10 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.TextBox2, Content.Load<Texture2D>("Sprites\\textbox2"));
 
             //Worker
-            sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
-            sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\philip"));
-            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\Animation\\rikke"));
-            sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
+            sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\Animation\\irene0"));
+            sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\Animation\\philip0"));
+            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\Animation\\rikke0"));
+            sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\Animation\\simon0"));
 
             ////RessourceType
             sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
@@ -254,12 +254,33 @@ namespace MortenInTheMaking
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
         {
-            //Texture2D[] rikke = new Texture2D[5];
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    rikke[i] = Content.Load<Texture2D>("Sprites\\Animation\\rikke" + i);
-            //}
-            //animations.Add(WorkerID.Rikke, rikke);
+            Texture2D[] rikke = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                rikke[i] = Content.Load<Texture2D>("Sprites\\Animation\\rikke" + i);
+            }
+            animations.Add(WorkerID.Rikke, rikke);
+
+            Texture2D[] irene = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                irene[i] = Content.Load<Texture2D>("Sprites\\Animation\\irene" + i);
+            }
+            animations.Add(WorkerID.Irene, irene);
+
+            Texture2D[] philip = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                philip[i] = Content.Load<Texture2D>("Sprites\\Animation\\philip" + i);
+            }
+            animations.Add(WorkerID.Philip, philip);
+
+            Texture2D[] simon = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                simon[i] = Content.Load<Texture2D>("Sprites\\Animation\\simon" + i);
+            }
+            animations.Add(WorkerID.Simon, simon);
         }
 
         private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)

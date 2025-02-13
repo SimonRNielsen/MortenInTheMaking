@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct3D9;
 using System;
 
 namespace MortenInTheMaking
@@ -15,6 +17,9 @@ namespace MortenInTheMaking
         private int hasCoffee = 10;
         private RessourceType carriedRessource;
         private bool hasRessource = false;
+        private float timeElapsed;
+        private int currentIndex;
+        private float fps;
 
         #endregion
         #region Properties
@@ -23,6 +28,7 @@ namespace MortenInTheMaking
         public Vector2 Destination { get => destination; set => destination = value; }
         public Vector2 SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
         public int HasCoffee { get => hasCoffee; set => hasCoffee = value; }
+        public float Fps { get => fps; set => fps = value; }
 
         #endregion
         #region Constructor
@@ -32,9 +38,12 @@ namespace MortenInTheMaking
             Type = type;
             spawnPosition = spawnPos;
             position = spawnPos;
-            this.sprite = GameWorld.sprites[type];
+            this.sprites = GameWorld.animations[type];
             this.layer = 0.98f;
             this.Destination = position;
+            this.Fps = 10f;
+            this.sprite = GameWorld.sprites[type];
+
             switch ((WorkerID)type)
             {
                 case WorkerID.Philip:
@@ -48,6 +57,11 @@ namespace MortenInTheMaking
             }
         }
 
+        //public override void LoadContent(ContentManager content)
+        //{
+        //    GameWorld.gameObjects.Sprite = new Texture2D[5];
+        //}
+
         #endregion
         #region Methods
 
@@ -57,6 +71,8 @@ namespace MortenInTheMaking
             {
                 MoveToDestination(gameTime);
             }
+
+            Animation(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -153,6 +169,30 @@ namespace MortenInTheMaking
                     break;
             }
 
+
+        }
+
+        public void Animation(GameTime gameTime)
+        {
+            //Restart the animation
+            if (currentIndex >= sprites.Length - 1)
+            {
+                timeElapsed = 0;
+                currentIndex = 0;
+            }
+            
+            //If the velocity is equal to Vect2.Zero there will not be any animation
+            //if (velocity == Vector2.Zero)
+            //{
+            //    return;
+            //}
+
+            //Adding the time which has passed since the last update
+            timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            currentIndex = (int)(timeElapsed * Fps);
+
+            sprite = GameWorld.animations[type][currentIndex]; 
 
         }
 
