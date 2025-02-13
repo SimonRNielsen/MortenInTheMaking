@@ -12,7 +12,7 @@ namespace MortenInTheMaking
 
 
         private Thread ProductivityThread;
-        private int productivity;
+        //private int productivity;
 
         #endregion
         #region Properties
@@ -57,8 +57,8 @@ namespace MortenInTheMaking
                 //if (productivity > 0)
                 //{
                     Thread.Sleep(2000);
-                    //productivity--; //dræner produktivitet hele tiden, langsomt over tid
-                    productivity = GameWorld.Productivity;
+                //productivity = GameWorld.Productivity;
+                //productivity--; //dræner produktivitet hele tiden, langsomt over tid
                 //}
 
 
