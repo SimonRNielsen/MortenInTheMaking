@@ -42,24 +42,16 @@ namespace MortenInTheMaking
 
         #endregion
         #region methods
-        //public void DrinkCoffee()
-        //{
-        //    int coffee = GameWorld.BrewingStation.Coffee;
-        //}
-
        
-
-
-
         public void UpdateProductivity()
         {
             while (running)
             {
                 //if (productivity > 0)
                 //{
-                    Thread.Sleep(2000);
-                    //productivity--; //dræner produktivitet hele tiden, langsomt over tid
-                    productivity = GameWorld.Productivity;
+                Thread.Sleep(2000);
+                //productivity--; //dræner produktivitet hele tiden, langsomt over tid
+                productivity = GameWorld.Productivity;
                 //}
 
 
@@ -86,13 +78,7 @@ namespace MortenInTheMaking
                 Rectangle sourceRectangle = new Rectangle(0, 0, scaledWidth, sprite.Height);
                 spriteBatch.Draw(GameWorld.sprites[type], position, sourceRectangle, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, layer);
             }
-            //else
-            //{
-
-            //    // Tegn den normale, ikke-fyldte bar
-            //    spriteBatch.Draw(GameWorld.sprites[type], position, Color.White);
-
-            //}
+           
         }
 
         #endregion
