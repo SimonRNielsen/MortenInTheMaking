@@ -181,7 +181,9 @@ namespace MortenInTheMaking
             else if (money > winCondition) //Win conditions
             {
                 //Clearing gameObjects
+                drawMutex.WaitOne();
                 GameWorld.gameObjects.Clear();
+                drawMutex.ReleaseMutex();
 
                 //Stopping the soundeffect instancs
                 brewingSoundEffectInstance.Stop();
