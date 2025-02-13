@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
-using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +23,7 @@ namespace MortenInTheMaking
         public static int Productivity;
         private List<Worker> workersAtComputer = new List<Worker>();
         private int moneyMaking = 1000; //How much money the worker is making 
+        static readonly object ResourceLock = new object(); //Lock object, to reassure no race conditions on changing value of resources. 
 
         #endregion
         #region Properties
@@ -47,9 +45,12 @@ namespace MortenInTheMaking
             get => coffeeBeans;
             set
             {
-                coffeeBeans = value;
-                if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                lock (ResourceLock)
+                {
+                    coffeeBeans = value;
+                    if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
+                    { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                }
             }
         }
         public int Water
@@ -57,8 +58,11 @@ namespace MortenInTheMaking
             get => water;
             set
             {
-                water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                lock (ResourceLock)
+                {
+                    water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
+                    { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                }
             }
         }
         public int Milk
@@ -66,8 +70,12 @@ namespace MortenInTheMaking
             get => milk;
             set
             {
-                milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                lock (ResourceLock)
+                {
+                    milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
+                    { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+
+                }
             }
         }
         public int Coffee { get => coffee; set { coffee = value; } }

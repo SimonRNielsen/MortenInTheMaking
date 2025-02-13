@@ -46,7 +46,7 @@ namespace MortenInTheMaking
             }
             else if (type is DecorationType.Morten)
             {
-                this.scale = 0.25f;
+                this.scale = 2f;
                 this.SpriteEffectIndex = 1;
             }
             else if (type is DecorationType.Start)

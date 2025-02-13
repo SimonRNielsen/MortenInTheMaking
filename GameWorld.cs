@@ -91,7 +91,7 @@ namespace MortenInTheMaking
             gameObjects.Add(new Decoration(DecorationType.Sign, new Vector2(960, 80)));
 
             gameObjects.Add(new Ressource(RessourceType.Status, Vector2.Zero));
-            gameObjects.Add(new Decoration(DecorationType.Morten, new Vector2(1400, 200))); //Undercover Morten
+            gameObjects.Add(new Decoration(DecorationType.Morten, new Vector2(1400, 210))); //Undercover Morten
 
             int stationMove = 190; //Background to the different kind of stations 
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, 320))); //Top left
@@ -181,7 +181,9 @@ namespace MortenInTheMaking
             else if (money > winCondition) //Win conditions
             {
                 //Clearing gameObjects
+                drawMutex.WaitOne();
                 GameWorld.gameObjects.Clear();
+                drawMutex.ReleaseMutex();
 
                 //Stopping the soundeffect instancs
                 brewingSoundEffectInstance.Stop();
