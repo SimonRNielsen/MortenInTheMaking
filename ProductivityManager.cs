@@ -41,15 +41,7 @@ namespace MortenInTheMaking
 
         #endregion
         #region methods
-        //public void DrinkCoffee()
-        //{
-        //    int coffee = GameWorld.BrewingStation.Coffee;
-        //}
-
        
-
-
-
         public void UpdateProductivity()
         {
             while (GameWorld.GameRunning)
