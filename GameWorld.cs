@@ -201,9 +201,6 @@ namespace MortenInTheMaking
             {
                 brewingSoundEffectInstance.Stop();
                 typpingSoundEffectInstance.Stop();
-                
-                //Adding the end screen to gameObjects
-                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             }
             //base.Update(gameTime);
 
