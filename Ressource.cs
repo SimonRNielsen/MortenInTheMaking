@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Globalization;
 
 namespace MortenInTheMaking
 {
@@ -61,7 +62,7 @@ namespace MortenInTheMaking
         /// <param name="spriteBatch">Spritebatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1403, 980), Color.White, 0f, Vector2.Zero, 1.4f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString("N0", new CultureInfo("en-US")), new Vector2(1403, 980), Color.White, 0f, Vector2.Zero, 1.4f, SpriteEffects.None, 1f);
 
             spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(60, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
