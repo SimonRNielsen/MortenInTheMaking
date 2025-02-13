@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MortenInTheMaking
+﻿namespace MortenInTheMaking
 {
     //Enum which doesn't have a sprites to
     public enum DecorationType
