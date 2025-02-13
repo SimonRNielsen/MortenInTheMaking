@@ -48,6 +48,7 @@ namespace MortenInTheMaking
         private Thread drawThread;
         private Mutex drawMutex = new Mutex();
         public static readonly object ResourceLock = new object();
+        public static Semaphore startSemaphore = new Semaphore(0, 5);
 
         #endregion
         #endregion
@@ -184,6 +185,7 @@ namespace MortenInTheMaking
                 //Removing the start screen from gameObjects
                 gameObjects.Remove(startScreen);
                 drawMutex.ReleaseMutex();
+                startSemaphore.Release(5);
             }
             if (money >= 50000 && !won)
                 Thread.Sleep(1500);
