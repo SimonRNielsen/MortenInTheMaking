@@ -23,8 +23,7 @@ namespace MortenInTheMaking
         public static int Productivity;
         private List<Worker> workersAtComputer = new List<Worker>();
         private int moneyMaking = 1000; //How much money the worker is making 
-        static readonly object ResourceLock = new object(); //Lock object, to reassure no race conditions on changing value of resources. 
-
+        
         #endregion
         #region Properties
 
@@ -45,11 +44,11 @@ namespace MortenInTheMaking
             get => coffeeBeans;
             set
             {
-                lock (ResourceLock)
+                lock (GameWorld.ResourceLock)
                 {
                     coffeeBeans = value;
-                    if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                    { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                    if (this.coffeeBeans > 0 && this.water > 0 && this.milk > 0)
+                    { this.coffee++; this.milk--; this.water--; this.coffeeBeans--; }
                 }
             }
         }
@@ -58,10 +57,10 @@ namespace MortenInTheMaking
             get => water;
             set
             {
-                lock (ResourceLock)
+                lock (GameWorld.ResourceLock)
                 {
-                    water = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                    { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                    water = value; if (this.coffeeBeans > 0 && this.water > 0 && this.milk > 0)
+                    { this.coffee++; this.milk--; this.water--; this.coffeeBeans--; }
                 }
             }
         }
@@ -70,10 +69,10 @@ namespace MortenInTheMaking
             get => milk;
             set
             {
-                lock (ResourceLock)
+                lock (GameWorld.ResourceLock)
                 {
-                    milk = value; if (this.CoffeeBeans > 0 && this.Water > 0 && this.Milk > 0)
-                    { this.Coffee++; this.Milk--; this.Water--; this.CoffeeBeans--; }
+                    milk = value; if (this.coffeeBeans > 0 && this.water > 0 && this.milk > 0)
+                    { this.coffee++; this.milk--; this.water--; this.coffeeBeans--; }
 
                 }
             }
