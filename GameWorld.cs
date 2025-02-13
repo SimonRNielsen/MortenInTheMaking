@@ -111,7 +111,7 @@ namespace MortenInTheMaking
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom rigth
 
             gameObjects.Add(new Decoration(DecorationType.TextBox1, new Vector2(145, 95))); //left
-            gameObjects.Add(new Decoration(DecorationType.TextBox2, new Vector2(1760, 95))); //right
+            gameObjects.Add(new Decoration(DecorationType.TextBox2, new Vector2(1760, 110))); //right
 
 
 

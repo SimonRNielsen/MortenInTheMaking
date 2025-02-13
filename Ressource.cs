@@ -37,7 +37,7 @@ namespace MortenInTheMaking
         /// Player guide
         /// </summary>
         /// <returns>String with how to information to play the game</returns>
-        private static string HowToPlay() => "Select worker: \nLeft mouse click\n" +
+        private static string HowToPlay() => "\nSelect worker: \nLeft mouse click\n" +
             "Assign to workstation: \nRight mouse click \nPress ESC to exit";
 
         /// <summary>
