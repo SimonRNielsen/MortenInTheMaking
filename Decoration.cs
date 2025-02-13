@@ -51,6 +51,11 @@ namespace MortenInTheMaking
                 this.scale = 0.25f;
                 this.SpriteEffectIndex = 1; 
             }
+            else if (type is OverlayGraphics.BarHollow || type is OverlayGraphics.Lightning || type is OverlayGraphics.MoneySquare)
+            {
+                this.scale = 0.98f;
+            }
+            
 
         }
 
