@@ -25,7 +25,7 @@ namespace MortenInTheMaking
         internal static Workstation WaterStation;
         internal static Workstation BrewingStation;
         internal static Workstation ComputerStation;
-
+        private bool won = false;
         private static int money;
         private static int productivity = 4; //Start productivity
         private static int winCondition = 50000; ///Win conditions amount
@@ -48,6 +48,7 @@ namespace MortenInTheMaking
         private Thread drawThread;
         private Mutex drawMutex = new Mutex();
         public static readonly object ResourceLock = new object();
+        public static Semaphore startSemaphore = new Semaphore(0, 5);
 
         #endregion
         #endregion
@@ -55,7 +56,16 @@ namespace MortenInTheMaking
 
         public static bool GameRunning { get => gameRunning; }
 
-        public static int Productivity { get => productivity; set => productivity = value; }
+        public static int Productivity
+        {
+            get => productivity;
+            set
+            {
+                if (value > 40)
+                    value = 40;
+                productivity = value;
+            }
+        }
 
         public static int Money { get => money; set => money = value; }
 
@@ -144,9 +154,6 @@ namespace MortenInTheMaking
             brewingSoundEffectInstance = GameWorld.soundEffects["brewingSound"].CreateInstance();
             typpingSoundEffectInstance = GameWorld.soundEffects["typingSound"].CreateInstance();
 
-
-
-
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start(); //SKAL startes som det sidste
@@ -168,39 +175,46 @@ namespace MortenInTheMaking
 
         protected override void Update(GameTime gameTime)
         {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Update(gameTime);
+            }
+            if (gameObjects.Contains(startScreen) && Keyboard.GetState().IsKeyDown(Keys.Enter)) //Starting the game
+            {
+                drawMutex.WaitOne();
+                //Removing the start screen from gameObjects
+                gameObjects.Remove(startScreen);
+                drawMutex.ReleaseMutex();
+                startSemaphore.Release(5);
+            }
+            if (money >= 50000 && !won)
+                Thread.Sleep(1500);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 gameRunning = false;
                 Thread.Sleep(30);
                 Exit();
             }
-            else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter)) //Starting the game
-            {
-                //Removing the start screen from gameObjects
-                GameWorld.gameObjects.Remove(GameWorld.startScreen);
-            }
-            else if (money > winCondition) //Win conditions
+            else if (money >= winCondition && !won) //Win conditions
             {
                 //Clearing gameObjects
                 drawMutex.WaitOne();
                 GameWorld.gameObjects.Clear();
+                //Adding the end screen to gameObjects
+                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
                 drawMutex.ReleaseMutex();
 
                 //Stopping the soundeffect instancs
+                won = true;
+
+            }
+            if (won)
+            {
                 brewingSoundEffectInstance.Stop();
                 typpingSoundEffectInstance.Stop();
-                
-                //Adding the end screen to gameObjects
-                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
-                
             }
+            //base.Update(gameTime);
 
-            base.Update(gameTime);
-
-            foreach (GameObject gameObject in gameObjects)
-            {
-                gameObject.Update(gameTime);
-            }
 
         }
 
@@ -234,10 +248,10 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.TextBox2, Content.Load<Texture2D>("Sprites\\textbox2"));
 
             //Worker
-            sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
-            sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\philip"));
-            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\rikke"));
-            sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
+            sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\Animation\\irene0"));
+            sprites.Add(WorkerID.Philip, Content.Load<Texture2D>("Sprites\\Animation\\philip0"));
+            sprites.Add(WorkerID.Rikke, Content.Load<Texture2D>("Sprites\\Animation\\rikke0"));
+            sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\Animation\\simon0"));
 
             ////RessourceType
             sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
@@ -255,7 +269,33 @@ namespace MortenInTheMaking
 
         private void LoadAnimations(ContentManager content, Dictionary<Enum, Texture2D[]> animations)
         {
+            Texture2D[] rikke = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                rikke[i] = Content.Load<Texture2D>("Sprites\\Animation\\rikke" + i);
+            }
+            animations.Add(WorkerID.Rikke, rikke);
 
+            Texture2D[] irene = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                irene[i] = Content.Load<Texture2D>("Sprites\\Animation\\irene" + i);
+            }
+            animations.Add(WorkerID.Irene, irene);
+
+            Texture2D[] philip = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                philip[i] = Content.Load<Texture2D>("Sprites\\Animation\\philip" + i);
+            }
+            animations.Add(WorkerID.Philip, philip);
+
+            Texture2D[] simon = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
+            {
+                simon[i] = Content.Load<Texture2D>("Sprites\\Animation\\simon" + i);
+            }
+            animations.Add(WorkerID.Simon, simon);
         }
 
         private void LoadSounds(ContentManager content, Dictionary<string, SoundEffect> sounds)

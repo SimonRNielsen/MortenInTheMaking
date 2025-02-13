@@ -38,7 +38,7 @@ namespace MortenInTheMaking
         /// </summary>
         /// <returns>String with how to information to play the game</returns>
         private static string HowToPlay() => "\nSelect worker: \nLeft mouse click\n" +
-            "Assign to workstation: \nRight mouse click";
+            "Assign to workstation: \nRight mouse click \nPress ESC to close game";
 
         /// <summary>
         /// Ressource Status
@@ -65,9 +65,9 @@ namespace MortenInTheMaking
         {
             spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString("N0", new CultureInfo("en-US")), new Vector2(1403, 980), Color.White, 0f, Vector2.Zero, 1.4f, SpriteEffects.None, 1f);
 
-            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(60, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(60, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.3f);
 
-            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1660, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1660, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.3f);
 
             base.Draw(spriteBatch);
         }
