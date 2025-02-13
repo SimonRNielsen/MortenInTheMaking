@@ -8,6 +8,8 @@ namespace MortenInTheMaking
     internal class Ressource : GameObject
     {
         #region Fields
+        protected static string url = "https://simkl.itch.io/mortens-komeback-ii";
+
         #endregion
 
         #region Properties
@@ -67,6 +69,7 @@ namespace MortenInTheMaking
             spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(60, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
             spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1660, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
             base.Draw(spriteBatch);
         }
 

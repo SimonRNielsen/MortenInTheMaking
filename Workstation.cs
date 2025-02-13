@@ -19,7 +19,7 @@ namespace MortenInTheMaking
         private int coffeeBeans;
         private int water;
         private int milk;
-        private int coffee = 1;
+        private int coffee = 4;
         public static int Productivity;
         private List<Worker> workersAtComputer = new List<Worker>();
         private int moneyMaking = 1000; //How much money the worker is making 

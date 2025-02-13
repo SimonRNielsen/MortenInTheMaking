@@ -27,8 +27,8 @@ namespace MortenInTheMaking
         internal static Workstation ComputerStation;
 
         private static int money;
-        private static int productivity = 3; //Start productivity
-        private static int winCondition = 1000000; ///Win conditions amount
+        private static int productivity = 4; //Start productivity
+        private static int winCondition = 1000; ///Win conditions amount
 
         internal static Decoration startScreen;
         internal static SoundEffectInstance brewingSoundEffectInstance;
@@ -191,9 +191,10 @@ namespace MortenInTheMaking
                 
                 //Adding the end screen to gameObjects
                 GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+                
             }
 
-            //base.Update(gameTime);
+            base.Update(gameTime);
 
             foreach (GameObject gameObject in gameObjects)
             {
