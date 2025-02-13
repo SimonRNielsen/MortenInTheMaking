@@ -105,7 +105,6 @@ namespace MortenInTheMaking
                     || (WorkstationType)type == WorkstationType.MilkStation
                     || (WorkstationType)type == WorkstationType.WaterStation))
                 {
-                    //AssignedWorker.Busy = false;
                     color = Color.Green;
                     Thread.Sleep(2000);
                     if (assignedWorker != null)
