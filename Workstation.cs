@@ -104,7 +104,7 @@ namespace MortenInTheMaking
                     || (WorkstationType)type == WorkstationType.MilkStation
                     || (WorkstationType)type == WorkstationType.WaterStation))
                 {
-                    AssignedWorker.Busy = false;
+                    //AssignedWorker.Busy = false;
                     color = Color.Green;
                     Thread.Sleep(2000);
                     if (assignedWorker != null)
@@ -118,7 +118,6 @@ namespace MortenInTheMaking
                     && (WorkstationType)type == WorkstationType.BrewingStation
                     && Vector2.Distance(Position, AssignedWorker.Position) < 100)
                 {
-                    AssignedWorker.Busy = false;
                     if (Coffee > 0)
                     {
                         GameWorld.brewingSoundEffectInstance.Play();
@@ -132,6 +131,7 @@ namespace MortenInTheMaking
                         color = Color.Red;
                         Thread.Sleep(1000);
                     }
+                    AssignedWorker.Busy = false;
                     AssignedWorker = null;
                     color = Color.White;
                 }

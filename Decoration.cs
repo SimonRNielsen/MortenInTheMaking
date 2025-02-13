@@ -53,7 +53,12 @@ namespace MortenInTheMaking
             {
                 this.layer = 1f;
             }
+            else if (type is OverlayGraphics.BarHollow || type is OverlayGraphics.Lightning || type is OverlayGraphics.MoneySquare)
+            {
+                this.scale = 0.98f;
+            }
         }
+            
 
 
         #endregion

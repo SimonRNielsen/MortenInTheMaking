@@ -56,7 +56,7 @@ namespace MortenInTheMaking
         #region Properties
 
         public static bool GameRunning { get => gameRunning; }
-        public SpriteBatch SpriteBatch { get => _spriteBatch; set => _spriteBatch = value; }
+
         public static int Productivity { get => productivity; set => productivity = value; }
 
         public static int Money { get => money; set => money = value; }
@@ -68,7 +68,7 @@ namespace MortenInTheMaking
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         #endregion
@@ -102,12 +102,17 @@ namespace MortenInTheMaking
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom left
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom rigth
 
+            gameObjects.Add(new Decoration(DecorationType.TextBox1, new Vector2(145, 95))); //left
+            gameObjects.Add(new Decoration(DecorationType.TextBox2, new Vector2(1760, 95))); //right
+
+
+
             #endregion
             #region overlay
-            gameObjects.Add(new ProgressBar(OverlayGraphics.MoneySquare, new Vector2(1480, 1000)));
-            gameObjects.Add(new ProgressBar(OverlayGraphics.BarHollow, new Vector2(780, 1000)));
-            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(294, 983)));
-            gameObjects.Add(new ProgressBar(OverlayGraphics.Lightning, new Vector2(250, 1000)));
+            gameObjects.Add(new Decoration(OverlayGraphics.MoneySquare, new Vector2(1480, 1000)));
+            gameObjects.Add(new Decoration(OverlayGraphics.BarHollow, new Vector2(780, 1000)));
+            gameObjects.Add(new ProductivityManager(ProgressFilling.BarFilling, new Vector2(303, 983)));
+            gameObjects.Add(new Decoration(OverlayGraphics.Lightning, new Vector2(255, 1000)));
             #endregion
 
             //Worker
@@ -153,7 +158,7 @@ namespace MortenInTheMaking
         protected override void LoadContent()
         {
 
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadSprites(Content, sprites);
             LoadAnimations(Content, animations);
@@ -224,6 +229,8 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.Sign, Content.Load<Texture2D>("Sprites\\sign"));
             sprites.Add(DecorationType.Start, Content.Load<Texture2D>("Sprites\\introScreen"));
             sprites.Add(DecorationType.End, Content.Load<Texture2D>("Sprites\\loseScreen"));
+            sprites.Add(DecorationType.TextBox1, Content.Load<Texture2D>("Sprites\\textbox1"));
+            sprites.Add(DecorationType.TextBox2, Content.Load<Texture2D>("Sprites\\textbox2"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
@@ -232,10 +239,10 @@ namespace MortenInTheMaking
             sprites.Add(WorkerID.Simon, Content.Load<Texture2D>("Sprites\\simon"));
 
             ////RessourceType
-            //sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
-            //sprites.Add(RessourceType.Milk, Content.Load<Texture2D>("Sprites\\milk"));
-            //sprites.Add(RessourceType.Water, Content.Load<Texture2D>("Sprites\\water"));
-            //sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
+            sprites.Add(RessourceType.CoffeeBeans, Content.Load<Texture2D>("Sprites\\coffeebean"));
+            sprites.Add(RessourceType.Milk, Content.Load<Texture2D>("Sprites\\milk"));
+            sprites.Add(RessourceType.Water, Content.Load<Texture2D>("Sprites\\water"));
+            sprites.Add(RessourceType.Coffee, Content.Load<Texture2D>("Sprites\\cup"));
 
             //WorkStation
             sprites.Add(WorkstationType.Computer, Content.Load<Texture2D>("Sprites\\pcStation"));
@@ -276,7 +283,7 @@ namespace MortenInTheMaking
                 drawMutex.WaitOne();
                 Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                SpriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
                 mousePointer.Draw(_spriteBatch);
                 foreach (GameObject gameObject in gameObjects)
@@ -284,7 +291,7 @@ namespace MortenInTheMaking
                     gameObject.Draw(_spriteBatch);
                 }
 
-                SpriteBatch.End();
+                _spriteBatch.End();
                 drawMutex.ReleaseMutex();
             }
 
