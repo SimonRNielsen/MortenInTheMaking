@@ -25,10 +25,14 @@ namespace MortenInTheMaking
         internal static Workstation WaterStation;
         internal static Workstation BrewingStation;
         internal static Workstation ComputerStation;
+
         private static int money;
+        private static int productivity = 3; //Start productivity
+        private static int winCondition = 1000000; ///Win conditions amount
 
-        private static int productivity = 42;
-
+        internal static Decoration startScreen;
+        internal static SoundEffectInstance brewingSoundEffectInstance;
+        internal static SoundEffectInstance typpingSoundEffectInstance;
 
         #region Assets
 
@@ -77,13 +81,16 @@ namespace MortenInTheMaking
             mousePointer = new MousePointer(DecorationType.Cursor);
 
 
-            gameObjects.Add(new Ressource(RessourceType.Status, Vector2.Zero));
 
             #region decoration the office
+            startScreen = new Decoration(DecorationType.Start, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2));
+            gameObjects.Add(startScreen); ////////////////////////////////
+
             gameObjects.Add(new Decoration(DecorationType.Background, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
             //gameObjects.Add(new Workstation(WorkstationType.Computer, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight * 3 / 5))); Note form Philip: Moved it down with other workstations
             gameObjects.Add(new Decoration(DecorationType.Sign, new Vector2(960, 80)));
 
+            gameObjects.Add(new Ressource(RessourceType.Status, Vector2.Zero));
             gameObjects.Add(new Decoration(DecorationType.Morten, new Vector2(1400, 200))); //Undercover Morten
 
             int stationMove = 190; //Background to the different kind of stations 
@@ -132,6 +139,13 @@ namespace MortenInTheMaking
             gameObjects.Add(ComputerStation);
             ComputerStation.Start();
 
+            //The soundeffect instants for the coffee brewing and pc typing
+            brewingSoundEffectInstance = GameWorld.soundEffects["brewingSound"].CreateInstance();
+            typpingSoundEffectInstance = GameWorld.soundEffects["typingSound"].CreateInstance();
+
+
+
+
             drawThread = new Thread(RunDraw);
             drawThread.IsBackground = true;
             drawThread.Start(); //SKAL startes som det sidste
@@ -159,8 +173,25 @@ namespace MortenInTheMaking
                 Thread.Sleep(30);
                 Exit();
             }
+            else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter)) //Starting the game
+            {
+                //Removing the start screen from gameObjects
+                GameWorld.gameObjects.Remove(GameWorld.startScreen);
+            }
+            else if (money > winCondition) //Win conditions
+            {
+                //Clearing gameObjects
+                GameWorld.gameObjects.Clear();
 
-            base.Update(gameTime);
+                //Stopping the soundeffect instancs
+                brewingSoundEffectInstance.Stop();
+                typpingSoundEffectInstance.Stop();
+                
+                //Adding the end screen to gameObjects
+                GameWorld.gameObjects.Add(new Decoration(DecorationType.End, new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2)));
+            }
+
+            //base.Update(gameTime);
 
             foreach (GameObject gameObject in gameObjects)
             {
@@ -193,6 +224,8 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
             sprites.Add(DecorationType.Morten, Content.Load<Texture2D>("Sprites\\underCoverMortenSlingGul3"));
             sprites.Add(DecorationType.Sign, Content.Load<Texture2D>("Sprites\\sign"));
+            sprites.Add(DecorationType.Start, Content.Load<Texture2D>("Sprites\\introScreen"));
+            sprites.Add(DecorationType.End, Content.Load<Texture2D>("Sprites\\loseScreen"));
             sprites.Add(DecorationType.TextBox1, Content.Load<Texture2D>("Sprites\\textbox1"));
             sprites.Add(DecorationType.TextBox2, Content.Load<Texture2D>("Sprites\\textbox2"));
 

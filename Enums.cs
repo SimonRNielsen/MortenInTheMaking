@@ -10,6 +10,9 @@
         SelectionBox,
         Sign,
         Morten, 
+        BarBlack,
+        Start,
+        End,
         TextBox1,
         TextBox2
     }

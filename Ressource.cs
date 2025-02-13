@@ -16,7 +16,11 @@ namespace MortenInTheMaking
 
         #region Constructor
 
-
+        /// <summary>
+        /// Ressource information
+        /// </summary>
+        /// <param name="type">Enum value</param>
+        /// <param name="spawnPos">Start position</param>
         public Ressource(Enum type, Vector2 spawnPos) : base(type, spawnPos)
         {
             Type = type;
@@ -27,10 +31,17 @@ namespace MortenInTheMaking
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Player guide
+        /// </summary>
+        /// <returns>String with how to information to play the game</returns>
         private static string HowToPlay() => "\nSelect worker: \nLeft mouse click\n" +
             "Assign to workstation: \nRight mouse click";
 
+        /// <summary>
+        /// Ressource Status
+        /// </summary>
+        /// <returns>String with the status of the different kinds of ressources</returns>
         private static string RessourceStatus()
         {
             int water = GameWorld.BrewingStation.Water;
@@ -44,6 +55,10 @@ namespace MortenInTheMaking
                 $"Coffee: {coffee}";
         }
 
+        /// <summary>
+        /// This override Draw method is for drawing the different kinds of string
+        /// </summary>
+        /// <param name="spriteBatch">Spritebatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1403, 980), Color.White, 0f, Vector2.Zero, 1.4f, SpriteEffects.None, 1f);

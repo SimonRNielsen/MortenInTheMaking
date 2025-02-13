@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +25,8 @@ namespace MortenInTheMaking
         private int coffee = 1;
         public static int Productivity;
         private List<Worker> workersAtComputer = new List<Worker>();
+        private int moneyMaking = 1000; //How much money the worker is making 
         static readonly object ResourceLock = new object(); //Lock object, to reassure no race conditions on changing value of resources. 
-
 
         #endregion
         #region Properties
@@ -126,7 +129,7 @@ namespace MortenInTheMaking
                 {
                     if (Coffee > 0)
                     {
-                        GameWorld.soundEffects["brewingSound"].Play();
+                        GameWorld.brewingSoundEffectInstance.Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         Coffee--;
@@ -154,13 +157,13 @@ namespace MortenInTheMaking
                     }
                     if (GameWorld.Productivity > 0)
                     {
-                        GameWorld.soundEffects["typingSound"].Play();
+                        GameWorld.typpingSoundEffectInstance.Play();
                         color = Color.Green;
                         Thread.Sleep(2000);
                         foreach (Worker w in WorkersAtComputer)
                         {
                             GameWorld.Productivity--;
-                            GameWorld.Money += 500;
+                            GameWorld.Money += moneyMaking;
                         }
                     }
                     else
