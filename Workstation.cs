@@ -153,7 +153,7 @@ namespace MortenInTheMaking
                         foreach (Worker w in WorkersAtComputer)
                         {
                             GameWorld.Productivity--;
-                            GameWorld.Money += 10;
+                            GameWorld.Money += 500;
                         }
                     }
                     else
