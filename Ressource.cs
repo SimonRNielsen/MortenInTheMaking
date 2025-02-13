@@ -36,7 +36,8 @@ namespace MortenInTheMaking
         /// </summary>
         /// <returns>String with how to information to play the game</returns>
         private static string HowToPlay() => "Left mouse click for avatar \n" +
-            "Right mouse click for workstation";
+            "Right mouse click for workstation \n" +
+            "ESC to close";
 
         /// <summary>
         /// Ressource Status
