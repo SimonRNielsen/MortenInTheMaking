@@ -101,6 +101,7 @@ namespace MortenInTheMaking
 
         public void RunWorkstation()
         {
+            GameWorld.startSemaphore.WaitOne();
             while (GameWorld.GameRunning)
             {
                 if (AssignedWorker != null
@@ -177,6 +178,7 @@ namespace MortenInTheMaking
                     Thread.Sleep(1000);
                 }
             }
+            GameWorld.startSemaphore.Release();
         }
 
         public void Start()
