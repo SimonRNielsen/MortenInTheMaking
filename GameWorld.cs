@@ -52,7 +52,7 @@ namespace MortenInTheMaking
         #region Properties
 
         public static bool GameRunning { get => gameRunning; }
-        public SpriteBatch SpriteBatch { get => _spriteBatch; set => _spriteBatch = value; }
+
         public static int Productivity { get => productivity; set => productivity = value; }
 
         public static int Money { get => money; set => money = value; }
@@ -139,7 +139,7 @@ namespace MortenInTheMaking
         protected override void LoadContent()
         {
 
-            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             LoadSprites(Content, sprites);
             LoadAnimations(Content, animations);
@@ -243,7 +243,7 @@ namespace MortenInTheMaking
                 drawMutex.WaitOne();
                 Thread.Sleep(1);
                 GraphicsDevice.Clear(Color.CornflowerBlue);
-                SpriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
                 mousePointer.Draw(_spriteBatch);
                 foreach (GameObject gameObject in gameObjects)
@@ -251,7 +251,7 @@ namespace MortenInTheMaking
                     gameObject.Draw(_spriteBatch);
                 }
 
-                SpriteBatch.End();
+                _spriteBatch.End();
                 drawMutex.ReleaseMutex();
             }
 
