@@ -8,7 +8,6 @@ namespace MortenInTheMaking
     internal class Ressource : GameObject
     {
         #region Fields
-        protected static string url = "https://simkl.itch.io/mortens-komeback-ii";
 
         #endregion
 
