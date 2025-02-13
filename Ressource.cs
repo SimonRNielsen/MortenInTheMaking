@@ -33,8 +33,8 @@ namespace MortenInTheMaking
 
         #region Methods
 
-        private static string HowToPlay() => "Left mouse click for avatar \n" +
-            "Right mouse click for workstation";
+        private static string HowToPlay() => "\nSelect worker: \nLeft mouse click\n" +
+            "Assign to workstation: \nRight mouse click";
 
         private static string RessourceStatus()
         {
@@ -43,7 +43,7 @@ namespace MortenInTheMaking
             int coffebean = GameWorld.BrewingStation.CoffeeBeans;
             int coffee = GameWorld.BrewingStation.Coffee;
             return 
-                $"Coffee bean: {coffebean} \n" +
+                $"\nCoffee bean: {coffebean} \n" +
                 $"Milk: {milk} \n" +
                 $"Water : {water} \n" +
                 $"Coffee: {coffee}";
@@ -53,9 +53,9 @@ namespace MortenInTheMaking
         {
             spriteBatch.DrawString(GameWorld.ressourceFont, GameWorld.Money.ToString(), new Vector2(1403, 980), Color.White, 0f, Vector2.Zero, 1.4f, SpriteEffects.None, 1f);
 
-            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(10, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, RessourceStatus(), new Vector2(60, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
-            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1500, 20), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(GameWorld.ressourceFont, HowToPlay(), new Vector2(1660, 23), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
             base.Draw(spriteBatch);
         }
 

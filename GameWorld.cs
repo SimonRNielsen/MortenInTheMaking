@@ -95,6 +95,11 @@ namespace MortenInTheMaking
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom left
             gameObjects.Add(new Decoration(DecorationType.Station, new Vector2(_graphics.PreferredBackBufferWidth - stationMove / 2, _graphics.PreferredBackBufferHeight - stationMove / 2))); //Bottom rigth
 
+            gameObjects.Add(new Decoration(DecorationType.TextBox1, new Vector2(145, 95))); //left
+            gameObjects.Add(new Decoration(DecorationType.TextBox2, new Vector2(1760, 95))); //right
+
+
+
             #endregion
             #region overlay
             gameObjects.Add(new ProgressBar(OverlayGraphics.MoneySquare, new Vector2(1480, 1000)));
@@ -191,6 +196,8 @@ namespace MortenInTheMaking
             sprites.Add(DecorationType.SelectionBox, Content.Load<Texture2D>("Sprites\\selection"));
             sprites.Add(DecorationType.Morten, Content.Load<Texture2D>("Sprites\\underCoverMortenSlingGul3"));
             sprites.Add(DecorationType.Sign, Content.Load<Texture2D>("Sprites\\sign"));
+            sprites.Add(DecorationType.TextBox1, Content.Load<Texture2D>("Sprites\\textbox1"));
+            sprites.Add(DecorationType.TextBox2, Content.Load<Texture2D>("Sprites\\textbox2"));
 
             //Worker
             sprites.Add(WorkerID.Irene, Content.Load<Texture2D>("Sprites\\irene"));
